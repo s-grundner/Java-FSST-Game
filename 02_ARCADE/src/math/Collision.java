@@ -35,7 +35,7 @@ public class Collision {
 			colNtt.setColliding(false);
 		}
 		updateMap();
-//		updateObjs();
+		updateObjs();
 	}
 
 	private void updateMap() {
