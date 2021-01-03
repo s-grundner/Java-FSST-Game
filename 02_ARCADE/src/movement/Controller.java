@@ -3,8 +3,8 @@ package movement;
 import objs.properties.Position;
 
 /**
- * @author	Simon Grundner
- * 			3AHEL
+ * @author	Simon Grundner <br>
+ *			3AHEL
  */
 
 public interface Controller {

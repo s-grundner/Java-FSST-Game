@@ -9,8 +9,8 @@ import javax.imageio.ImageIO;
 import config.Config;
 
 /**
- * @author	Simon Grundner
- * 			3AHEL
+ * @author	Simon Grundner <br>
+ *			3AHEL
  */
 
 public class Spritesheet {
@@ -45,7 +45,7 @@ public class Spritesheet {
 	}
 
 	public BufferedImage[][] getParts() { return parts; }
-	
+
 	public BufferedImage getSheet() { return sheet; }
 
 	public int getImgCount() { return parts.length; }

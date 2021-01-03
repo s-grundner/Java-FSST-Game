@@ -3,7 +3,7 @@ package objs.enumerators;
 import objs.properties.Hitbox;
 
 /**
- * @author	Simon Grundner
+ * @author	Simon Grundner <br>
  *			3AHEL
  */
 
@@ -14,8 +14,7 @@ public enum ProjectileType {
 	// ------------------------------------------------------------
 
 	BULLET("WEAPON_Bullet", new Hitbox(CustomHitbox.W_PROJ_BULLET), 100, 10, 3),
-	LASER("WEAPON_Laser", new Hitbox(CustomHitbox.W_PROJ_LASER), 0, 16, 100),
-	AOE("", new Hitbox(null, null), 0, 0, 0),
+	LASER("WEAPON_Laser", new Hitbox(CustomHitbox.W_PROJ_LASER), 0, 16, 100), AOE("", new Hitbox(null, null), 0, 0, 0),
 	WAND("", new Hitbox(null, null), 0, 0, 0);
 
 	// ------------------------------------------------------------

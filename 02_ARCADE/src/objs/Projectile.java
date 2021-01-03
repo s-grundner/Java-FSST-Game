@@ -8,7 +8,7 @@ import main.Game;
 import objs.enumerators.ProjectileType;
 
 /**
- * @author	Simon Grundner
+ * @author	Simon Grundner <br>
  *			3AHEL
  */
 
@@ -17,12 +17,14 @@ public class Projectile extends GameObj {
 	private ProjectileType projectile;
 	private Entity host;
 
-	public Projectile(Game game, ProjectileType projectile, Entity obj) {
+	public Projectile(Game game, ProjectileType projectile, Entity host) {
 		super(game);
-		this.vector = obj.getShootingVector();
-		this.pos.setPos(obj.getPos().getX() + Config.TILESIZE * Math.cos(vector.getAngleToXAxis()),
-						obj.getPos().getY() - Config.TILESIZE * Math.sin(vector.getAngleToXAxis()));
+		this.host = host;
 		this.projectile = projectile;
+		this.vector = host.getShootingVector();
+		this.pos.setPos(host.getPos().getX() + Config.TILESIZE * Math.cos(vector.getAngleToXAxis()),
+						host.getPos().getY() - Config.TILESIZE * Math.sin(vector.getAngleToXAxis()));
+
 		setImg(projectile.getFileName());
 		img = spritesheet.getImage(	projectile.getStage(),
 									projectile.getMode());
@@ -40,13 +42,11 @@ public class Projectile extends GameObj {
 
 	@Override
 	public void isColliding() {
-		if (host.equals(getCurrentCollision())) {
-			System.out.println(111);
-//			if (colliding) {
-//				setAlive(false);
-//			} else {
-//				
-//			}
+		if (!host.equals(getCurrentCollision())) {
+			if (colliding) {
+				setAlive(false);
+			} else {
+			}
 		}
 	}
 

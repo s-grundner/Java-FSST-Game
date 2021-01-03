@@ -14,8 +14,8 @@ import objs.properties.Size;
 import objs.properties.Spritesheet;
 
 /**
- * @author	Simon Grundner
- * 			3AHEL
+ * @author	Simon Grundner <br>
+ *			3AHEL
  */
 
 public abstract class GameObj {
@@ -50,12 +50,10 @@ public abstract class GameObj {
 		pos = new Position(0, 0);
 	}
 
-	
 	public void move(double speed) {
-		pos = new Position(	pos.getX() + vector.getX() * speed,
-							pos.getY() + vector.getY() * speed);
+		pos = new Position(pos.getX() + vector.getX() * speed, pos.getY() + vector.getY() * speed);
 	}
-	
+
 	// ------------------------------------------------------------
 	// Abstract Methods
 	// ------------------------------------------------------------
@@ -64,8 +62,7 @@ public abstract class GameObj {
 	public abstract void isColliding();
 	public abstract AffineTransform transform(Graphics2D graphics);
 	public abstract void draw(Graphics2D graphics);
-	
- 
+
 	// ------------------------------------------------------------
 	// Getters - Setters
 	// ------------------------------------------------------------
@@ -115,15 +112,14 @@ public abstract class GameObj {
 	public String displayPos() {
 		return pos.toString();
 	}
-	
+
 	public void drawOrigin(Graphics2D graphics) {
-			Graphics2D graphics2 = (Graphics2D) graphics.create();
-			graphics2.setColor(Color.BLUE);
-			graphics2.drawRect((int) pos.getX(),
-			                   (int) pos.getY(),
-			                   2,
-			                   2);
-			graphics2.dispose();
-		
+		Graphics2D graphics2 = (Graphics2D) graphics.create();
+		graphics2.setColor(Color.BLUE);
+		graphics2.drawRect(	(int) pos.getX(),
+							(int) pos.getY(),
+							2,
+							2);
+		graphics2.dispose();
 	}
 }

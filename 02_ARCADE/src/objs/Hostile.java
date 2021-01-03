@@ -9,7 +9,7 @@ import objs.enumerators.EntityStats;
 import objs.properties.Position;
 
 /**
- * @author	Simon Grundner
+ * @author	Simon Grundner <br>
  *			3AHEL
  */
 

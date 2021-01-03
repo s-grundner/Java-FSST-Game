@@ -6,8 +6,8 @@ import java.awt.event.MouseEvent;
 import objs.properties.Position;
 
 /**
- * @author Simon Grundner
- *         3AHEL
+ * @author	Simon Grundner <br>
+ *			3AHEL
  */
 
 public class PlayerController implements Controller {
@@ -23,9 +23,7 @@ public class PlayerController implements Controller {
 	// ------------------------------------------------------------
 
 	@Override
-	public Position getMousePos() {
-		return input.getMousePos();
-	}
+	public Position getMousePos() { return input.getMousePos(); }
 
 	@Override
 	public boolean reqUp() {

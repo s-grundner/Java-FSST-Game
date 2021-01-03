@@ -3,8 +3,8 @@ package objs.properties;
 import objs.enumerators.CustomHitbox;
 
 /**
- * @author	Simon Grundner
- * 			3AHEL
+ * @author	Simon Grundner <br>
+ *			3AHEL
  */
 
 public class Hitbox {

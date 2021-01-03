@@ -15,7 +15,7 @@ import objs.GameObj;
 import objs.properties.Spritesheet;
 
 /**
- * @author	Simon Grundner
+ * @author	Simon Grundner <br>
  *			3AHEL
  */
 

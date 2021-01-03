@@ -26,9 +26,8 @@ import objs.properties.Size;
 import objs.properties.Spritesheet;
 
 /**
- * @author	Simon Grundner
- * 			3AHEL
- * 
+ * @author	Simon Grundner <br>
+ *			3AHEL
  */
 
 public class Map {
@@ -213,8 +212,8 @@ public class Map {
 
 			if (parent.getAttribute("name").equals("spawn")) {
 				Element spawn = (Element) spawnList.item(i);
-				spawnPos = new Position(Double.parseDouble(spawn.getAttribute("x")),
-										Double.parseDouble(spawn.getAttribute("y")));
+				spawnPos = new Position(Double.parseDouble(spawn.getAttribute("x")) - Config.TILESIZE / 2,
+										Double.parseDouble(spawn.getAttribute("y")) - Config.TILESIZE / 2);
 			}
 		}
 	}

@@ -7,7 +7,7 @@ import java.io.IOException;
 import main.Gui;
 
 /**
- * @author	Simon Grundner
+ * @author	Simon Grundner <br>
  *			3AHEL
  */
 

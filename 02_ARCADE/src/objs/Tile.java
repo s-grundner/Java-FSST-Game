@@ -7,7 +7,7 @@ import java.awt.image.BufferedImage;
 import main.Game;
 
 /**
- * @author	Simon Grundner
+ * @author	Simon Grundner <br>
  *			3AHEL
  */
 
@@ -32,8 +32,7 @@ public class Tile extends GameObj {
 	// ------------------------------------------------------------
 
 	@Override
-	public void draw(Graphics2D graphics) {
-	}
+	public void draw(Graphics2D graphics) {}
 
 	@Override
 	public AffineTransform transform(Graphics2D graphics) {

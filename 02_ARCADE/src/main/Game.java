@@ -16,8 +16,8 @@ import objs.enumerators.Maps;
 import objs.map.Map;
 
 /**
- * @author	Simon Grundner
- * 			3AHEL
+ * @author	Simon Grundner <br>
+ *			3AHEL
  */
 
 public class Game {

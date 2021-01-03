@@ -14,11 +14,11 @@ import objs.enumerators.ProjectileType;
 import objs.properties.Animated;
 
 /**
- * @author	Simon Grundner
- * 			3AHEL
+ * @author	Simon Grundner <br>
+ *			3AHEL
  */
 
-public class Player extends Entity implements Animated{
+public class Player extends Entity implements Animated {
 
 	private Controller controller;
 	private int animationIndex;
@@ -137,7 +137,6 @@ public class Player extends Entity implements Animated{
 	@Override
 	public void isColliding() {
 		if (colliding) {
-			
 			colV = vector;
 			colliding = false;
 

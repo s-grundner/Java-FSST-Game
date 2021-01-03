@@ -9,7 +9,7 @@ import objs.Projectile;
 import objs.properties.Hitbox;
 
 /**
- * @author	Simon Grundner
+ * @author	Simon Grundner <br>
  *			3AHEL
  */
 

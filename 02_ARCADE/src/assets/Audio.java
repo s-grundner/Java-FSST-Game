@@ -10,7 +10,7 @@ import javax.sound.sampled.FloatControl;
 import config.Config;
 
 /**
- * @author	Simon Grundner
+ * @author	Simon Grundner <br>
  *			3AHEL
  */
 

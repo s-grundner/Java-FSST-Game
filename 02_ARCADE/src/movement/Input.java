@@ -9,7 +9,7 @@ import java.awt.event.MouseMotionListener;
 import objs.properties.Position;
 
 /**
- * @author	Simon Grundner
+ * @author	Simon Grundner <br>
  *			3AHEL
  */
 
@@ -33,14 +33,12 @@ public class Input implements KeyListener, MouseListener, MouseMotionListener {
 		return mousePressed[keyCode];
 	}
 
-	public Position getMousePos() {
-		return mousePos;
-	}
+	public Position getMousePos() { return mousePos; }
 
-	//------------------------------------------------------------
-	//Key Listening
-	//------------------------------------------------------------
-	
+	// ------------------------------------------------------------
+	// Key Listening
+	// ------------------------------------------------------------
+
 	@Override
 	public void keyPressed(KeyEvent e) {
 		pressed[e.getKeyCode()] = true;
@@ -52,24 +50,20 @@ public class Input implements KeyListener, MouseListener, MouseMotionListener {
 	}
 
 	@Override
-	public void keyTyped(KeyEvent e) {
-	}
+	public void keyTyped(KeyEvent e) {}
 
-	//------------------------------------------------------------
-	//Mouse Listening
-	//------------------------------------------------------------
-	
-	@Override
-	public void mouseClicked(MouseEvent e) {
-	}
+	// ------------------------------------------------------------
+	// Mouse Listening
+	// ------------------------------------------------------------
 
 	@Override
-	public void mouseEntered(MouseEvent e) {
-	}
+	public void mouseClicked(MouseEvent e) {}
 
 	@Override
-	public void mouseExited(MouseEvent e) {
-	}
+	public void mouseEntered(MouseEvent e) {}
+
+	@Override
+	public void mouseExited(MouseEvent e) {}
 
 	@Override
 	public void mousePressed(MouseEvent e) {
@@ -92,5 +86,4 @@ public class Input implements KeyListener, MouseListener, MouseMotionListener {
 		mousePos.setX(e.getX());
 		mousePos.setY(e.getY());
 	}
-
 }

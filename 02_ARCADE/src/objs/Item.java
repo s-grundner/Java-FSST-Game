@@ -11,7 +11,7 @@ import objs.properties.Animated;
 import objs.properties.Hitbox;
 
 /**
- * @author	Simon Grundner
+ * @author	Simon Grundner <br>
  *			3AHEL
  */
 
@@ -21,10 +21,10 @@ public class Item extends GameObj implements Animated {
 		super(game);
 	}
 
-	//------------------------------------------------------------
-	//update
-	//------------------------------------------------------------
-	
+	// ------------------------------------------------------------
+	// update
+	// ------------------------------------------------------------
+
 	@Override
 	public void update() {
 		initAnim();
@@ -32,28 +32,25 @@ public class Item extends GameObj implements Animated {
 
 	@Override
 	public void isColliding() {}
-	
-	//------------------------------------------------------------
-	//Animate
-	//------------------------------------------------------------
-	
+
+	// ------------------------------------------------------------
+	// Animate
+	// ------------------------------------------------------------
+
 	@Override
 	public void anim(Animation anim) {
-
 	}
 
 	@Override
 	public void initAnim() {
-
 	}
 
-	//------------------------------------------------------------
-	//Draw
-	//------------------------------------------------------------
-	
+	// ------------------------------------------------------------
+	// Draw
+	// ------------------------------------------------------------
+
 	@Override
 	public void draw(Graphics2D graphics) {
-
 	}
 
 	@Override
@@ -61,12 +58,10 @@ public class Item extends GameObj implements Animated {
 		return null;
 	}
 
-	//------------------------------------------------------------
-	//Getters - Setters
-	//------------------------------------------------------------
-	
+	// ------------------------------------------------------------
+	// Getters - Setters
+	// ------------------------------------------------------------
+
 	@Override
-	public BufferedImage getImg() {
-		return null;
-	}
+	public BufferedImage getImg() { return null; }
 }

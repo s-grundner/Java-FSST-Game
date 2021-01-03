@@ -3,10 +3,9 @@ package assets;
 import objs.properties.Spritesheet;
 
 /**
- * @author	Simon Grundner
+ * @author	Simon Grundner <br>
  *			3AHEL
  */
-
 public enum Animation {
 	
 	//------------------------------------------------------------

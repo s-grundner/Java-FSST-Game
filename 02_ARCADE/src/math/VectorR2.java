@@ -1,8 +1,8 @@
 package math;
 
 /**
- * @author	Simon Grundner
- * 			3AHEL
+ * @author	Simon Grundner <br>
+ *			3AHEL
  */
 
 public class VectorR2 {

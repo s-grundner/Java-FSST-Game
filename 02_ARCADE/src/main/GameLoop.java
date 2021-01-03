@@ -3,7 +3,7 @@ package main;
 import config.Config;
 
 /**
- * @author	Simon Grundner
+ * @author	Simon Grundner <br>
  *			3AHEL
  */
 
