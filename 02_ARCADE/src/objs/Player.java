@@ -43,7 +43,7 @@ public class Player extends Entity {
 
 		animationIndex = 0;
 		chargingIndex = 0;
-		swIndex = 1;
+		swIndex = 0;
 		charging = false;
 		swMap = true;
 		vectorUpd = false;
@@ -65,6 +65,20 @@ public class Player extends Entity {
 		vectorUpd = false;
 		vector.setVector(	0,
 							0);
+		Keys();
+		
+		if (vectorUpd) {
+			pointingVector = vector;
+		}
+		if (!vector.equals(colV)) {
+			pos = new Position(	pos.getX() + vector.getX() * stats.getSpeed(),
+								pos.getY() + vector.getY() * stats.getSpeed());
+		}
+		isColliding();
+		initAnim();
+	}
+
+	public void Keys() {
 		if (controller.reqUp()) {
 			vector.setY(-1);
 			vectorUpd = true;
@@ -121,33 +135,17 @@ public class Player extends Entity {
 		} else {
 			swMap = true;
 		}
-		if(controller.resetCollision()) {
-			colliding = false;
-		}
-		if (vectorUpd) {
-			pointingVector = vector;
-		}
-		if (!vector.equals(colV)) {
-			pos = new Position(	pos.getX() + vector.getX() * stats.getSpeed(),
-								pos.getY() + vector.getY() * stats.getSpeed());
-		}
-		isColliding();
-		initAnim();
 	}
 
 	@Override
 	public void isColliding() {
-		
 		if (colliding) {
-			if (saveColV) {
-				colV = vector;
-				saveColV = false;
+			colV = vector;
+//			colliding = false;
 
-				System.out.println(colV.toString());
-			}
-			colliding = false;
+			System.out.println(colV.toString());
 		} else {
-			saveColV = true;
+//			saveColV = true;
 		}
 	}
 

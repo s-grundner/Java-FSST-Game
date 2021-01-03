@@ -35,7 +35,7 @@ public class Collision {
 			colNtt.setColliding(false);
 		}
 		updateMap();
-		updateObjs();
+//		updateObjs();
 	}
 
 	private void updateMap() {
@@ -48,17 +48,18 @@ public class Collision {
 					colObj.setColliding(true);
 				}
 			}
-			for (Entity colNtt : ntts) {
-				if (colHB.getPos().getX() < colNtt.getPos().getX() + colNtt.getSize().getWidth()
-						&& colHB.getPos().getX() + colHB.getSize().getWidth() > colNtt.getPos().getX()
-						&& colHB.getPos().getY() < colNtt.getPos().getY() + colNtt.getSize().getHeight()
-						&& colHB.getPos().getY() + colHB.getSize().getHeight() > colNtt.getPos().getY()) {
-					colNtt.setColliding(true);
-				}
-			}
+//			for (Entity colNtt : ntts) {
+//				if (colHB.getPos().getX() < colNtt.getPos().getX() + colNtt.getSize().getWidth()
+//						&& colHB.getPos().getX() + colHB.getSize().getWidth() > colNtt.getPos().getX()
+//						&& colHB.getPos().getY() < colNtt.getPos().getY() + colNtt.getSize().getHeight()
+//						&& colHB.getPos().getY() + colHB.getSize().getHeight() > colNtt.getPos().getY()) {
+//					colNtt.setColliding(true);
+//				}
+//			}
 		}
 	}
 
+	@SuppressWarnings("unused")
 	private void updateObjs() {
 		for (GameObj colObj : objs) {
 			for (GameObj colObj2 : objs) {

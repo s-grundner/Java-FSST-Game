@@ -20,8 +20,8 @@ public class Projectile extends GameObj {
 	public Projectile(Game game, ProjectileType projectile, Entity obj) {
 		super(game);
 		this.vector = obj.getShootingVector();
-		this.pos.setPos(obj.getPos().getX(),
-						obj.getPos().getY());
+		this.pos.setPos(obj.getPos().getX() + Config.TILESIZE * Math.cos(vector.getAngleToXAxis()),
+						obj.getPos().getY() - Config.TILESIZE * Math.sin(vector.getAngleToXAxis()));
 		this.projectile = projectile;
 		setImg(projectile.getFileName());
 		img = spritesheet.getImage(	projectile.getStage(),
@@ -35,13 +35,11 @@ public class Projectile extends GameObj {
 	@Override
 	public void update() {
 		initAnim();
-		if(colliding) {
+		if (colliding) {
 			isColliding();
-		}else {
-			pos.setPos(	pos.getX() + vector.getX() * projectile.getSpeed(),
+		} else {}
+		pos.setPos(	pos.getX() + vector.getX() * projectile.getSpeed(),
 					pos.getY() + vector.getY() * projectile.getSpeed());
-		}
-		
 	}
 
 	@Override
@@ -73,7 +71,7 @@ public class Projectile extends GameObj {
 								vector.getY(),
 								pos.getX() + size.getWidth() / 2,
 								pos.getY() + size.getHeight() / 2);
-		transform.translate(pos.getX() + Config.TILESIZE,
+		transform.translate(pos.getX(),
 							pos.getY());
 
 		return transform;

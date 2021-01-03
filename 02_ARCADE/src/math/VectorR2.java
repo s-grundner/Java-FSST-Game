@@ -21,7 +21,11 @@ public class VectorR2 {
 
 	public double getAngleToXAxis() {
 		VectorR2 xAxis = new VectorR2(1, 0);
-		return Math.acos(scalar(xAxis) / (abs() * xAxis.abs()));
+		if (y > 0) {
+			return (2 * Math.PI - (Math.acos(scalar(xAxis) / (abs() * xAxis.abs()))));
+		} else {
+			return Math.acos(scalar(xAxis) / (abs() * xAxis.abs()));
+		}
 	}
 
 	public double getAngleToYAxis() {
