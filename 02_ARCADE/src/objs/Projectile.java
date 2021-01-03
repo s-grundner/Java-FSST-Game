@@ -3,7 +3,6 @@ package objs;
 import java.awt.Graphics2D;
 import java.awt.geom.AffineTransform;
 
-import assets.Animation;
 import config.Config;
 import main.Game;
 import objs.enumerators.ProjectileType;
@@ -16,6 +15,7 @@ import objs.enumerators.ProjectileType;
 public class Projectile extends GameObj {
 
 	private ProjectileType projectile;
+	private Entity host;
 
 	public Projectile(Game game, ProjectileType projectile, Entity obj) {
 		super(game);
@@ -34,28 +34,21 @@ public class Projectile extends GameObj {
 
 	@Override
 	public void update() {
-		initAnim();
-		if (colliding) {
-			isColliding();
-		} else {}
-		pos.setPos(	pos.getX() + vector.getX() * projectile.getSpeed(),
-					pos.getY() + vector.getY() * projectile.getSpeed());
+		isColliding();
+		move(projectile.getSpeed());
 	}
 
 	@Override
 	public void isColliding() {
-		setAlive(false);
+		if (host.equals(getCurrentCollision())) {
+			System.out.println(111);
+//			if (colliding) {
+//				setAlive(false);
+//			} else {
+//				
+//			}
+		}
 	}
-
-	// ------------------------------------------------------------
-	// Animate
-	// ------------------------------------------------------------
-
-	@Override
-	public void anim(Animation anim) {}
-
-	@Override
-	public void initAnim() {}
 
 	// ------------------------------------------------------------
 	// Draw
@@ -73,7 +66,6 @@ public class Projectile extends GameObj {
 								pos.getY() + size.getHeight() / 2);
 		transform.translate(pos.getX(),
 							pos.getY());
-
 		return transform;
 	}
 
@@ -85,6 +77,15 @@ public class Projectile extends GameObj {
 							transform(graphics2),
 							null);
 		graphics2.setTransform(latch);
+		drawOrigin(graphics2);
 		graphics2.dispose();
 	}
+
+	public Entity getHost() { return host; }
+
+	public void setHost(Entity host) { this.host = host; }
+
+	// ------------------------------------------------------------
+	// Getters - Setters
+	// ------------------------------------------------------------
 }

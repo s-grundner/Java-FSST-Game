@@ -4,7 +4,6 @@ import java.awt.Graphics2D;
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 
-import assets.Animation;
 import main.Game;
 import objs.enumerators.EntityStats;
 import objs.properties.Position;
@@ -34,7 +33,6 @@ public class Hostile extends Entity {
 	@Override
 	public void update() {
 		pos = new Position(200, 200);
-		initAnim();
 	}
 
 	@Override
@@ -44,16 +42,6 @@ public class Hostile extends Entity {
 
 	@Override
 	public void isColliding() {}
-
-	// ------------------------------------------------------------
-	// Animate
-	// ------------------------------------------------------------
-
-	@Override
-	public void anim(Animation anim) {}
-
-	@Override
-	public void initAnim() {}
 
 	// ------------------------------------------------------------
 	// Draw

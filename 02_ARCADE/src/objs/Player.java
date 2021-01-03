@@ -11,14 +11,14 @@ import movement.Controller;
 import objs.enumerators.EntityStats;
 import objs.enumerators.Maps;
 import objs.enumerators.ProjectileType;
-import objs.properties.Position;
+import objs.properties.Animated;
 
 /**
  * @author	Simon Grundner
  * 			3AHEL
  */
 
-public class Player extends Entity {
+public class Player extends Entity implements Animated{
 
 	private Controller controller;
 	private int animationIndex;
@@ -28,7 +28,6 @@ public class Player extends Entity {
 	private boolean charging;
 	private boolean swMap;
 	private boolean vectorUpd;
-	private boolean saveColV;
 	private VectorR2 colV;
 
 	public Player(Game game, Controller controller) {
@@ -47,7 +46,6 @@ public class Player extends Entity {
 		charging = false;
 		swMap = true;
 		vectorUpd = false;
-		saveColV = true;
 	}
 
 	@Override
@@ -66,13 +64,12 @@ public class Player extends Entity {
 		vector.setVector(	0,
 							0);
 		Keys();
-		
+
 		if (vectorUpd) {
 			pointingVector = vector;
 		}
 		if (!vector.equals(colV)) {
-			pos = new Position(	pos.getX() + vector.getX() * stats.getSpeed(),
-								pos.getY() + vector.getY() * stats.getSpeed());
+			move(stats.getSpeed());
 		}
 		isColliding();
 		initAnim();
@@ -140,12 +137,13 @@ public class Player extends Entity {
 	@Override
 	public void isColliding() {
 		if (colliding) {
+			
 			colV = vector;
-//			colliding = false;
+			colliding = false;
 
 			System.out.println(colV.toString());
 		} else {
-//			saveColV = true;
+			colV = null;
 		}
 	}
 

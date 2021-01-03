@@ -7,6 +7,7 @@ import java.awt.image.BufferedImage;
 import assets.Animation;
 import main.Game;
 import objs.enumerators.ItemType;
+import objs.properties.Animated;
 import objs.properties.Hitbox;
 
 /**
@@ -14,7 +15,7 @@ import objs.properties.Hitbox;
  *			3AHEL
  */
 
-public class Item extends GameObj{
+public class Item extends GameObj implements Animated {
 
 	public Item(Game game, Hitbox hitbox, ItemType itemType) {
 		super(game);

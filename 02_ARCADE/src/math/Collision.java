@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import main.Game;
 import objs.Entity;
 import objs.GameObj;
+import objs.Projectile;
 import objs.properties.Hitbox;
 
 /**
@@ -35,7 +36,7 @@ public class Collision {
 			colNtt.setColliding(false);
 		}
 		updateMap();
-//		updateObjs();
+		updateObjs();
 	}
 
 	private void updateMap() {
@@ -48,18 +49,17 @@ public class Collision {
 					colObj.setColliding(true);
 				}
 			}
-//			for (Entity colNtt : ntts) {
-//				if (colHB.getPos().getX() < colNtt.getPos().getX() + colNtt.getSize().getWidth()
-//						&& colHB.getPos().getX() + colHB.getSize().getWidth() > colNtt.getPos().getX()
-//						&& colHB.getPos().getY() < colNtt.getPos().getY() + colNtt.getSize().getHeight()
-//						&& colHB.getPos().getY() + colHB.getSize().getHeight() > colNtt.getPos().getY()) {
-//					colNtt.setColliding(true);
-//				}
-//			}
+			for (Entity colNtt : ntts) {
+				if (colHB.getPos().getX() < colNtt.getPos().getX() + colNtt.getSize().getWidth()
+						&& colHB.getPos().getX() + colHB.getSize().getWidth() > colNtt.getPos().getX()
+						&& colHB.getPos().getY() < colNtt.getPos().getY() + colNtt.getSize().getHeight()
+						&& colHB.getPos().getY() + colHB.getSize().getHeight() > colNtt.getPos().getY()) {
+					colNtt.setColliding(true);
+				}
+			}
 		}
 	}
 
-	@SuppressWarnings("unused")
 	private void updateObjs() {
 		for (GameObj colObj : objs) {
 			for (GameObj colObj2 : objs) {
@@ -77,6 +77,8 @@ public class Collision {
 				}
 			}
 			for (Entity colNtt2 : ntts) {
+				
+				
 				if (colNtt2.getPos().getX() < colObj.getPos().getX() + colObj.getSize().getWidth()
 						&& colNtt2.getPos().getX() + colNtt2.getSize().getWidth() > colObj.getPos().getX()
 						&& colNtt2.getPos().getY() < colObj.getPos().getY() + colObj.getSize().getHeight()

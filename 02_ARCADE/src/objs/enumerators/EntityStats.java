@@ -19,10 +19,10 @@ public enum EntityStats {
 	//Members - Constructor
 	//------------------------------------------------------------
 	
-	private int speed;
+	private double speed;
 	private int hp;
 	
-	private EntityStats(int speed, int hp) {
+	private EntityStats(double speed, int hp) {
 		this.speed = speed;
 		this.hp = hp;
 	}
@@ -37,11 +37,11 @@ public enum EntityStats {
 	
 	public int getHp() { return hp; }
 	
-	public int getSpeed() {
+	public double getSpeed() {
 		return speed;
 	}
 
-	public void setSpeed(int speed) {
+	public void setSpeed(double speed) {
 		this.speed = speed;
 	}
 }

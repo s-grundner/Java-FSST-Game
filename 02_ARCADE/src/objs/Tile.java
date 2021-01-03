@@ -4,7 +4,6 @@ import java.awt.Graphics2D;
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 
-import assets.Animation;
 import main.Game;
 
 /**
@@ -23,24 +22,10 @@ public class Tile extends GameObj {
 	// ------------------------------------------------------------
 
 	@Override
-	public void update() {
-		initAnim();
-	}
+	public void update() {}
 
 	@Override
 	public void isColliding() {}
-
-	// ------------------------------------------------------------
-	// Animate
-	// ------------------------------------------------------------
-
-	@Override
-	public void anim(Animation anim) {
-	}
-
-	@Override
-	public void initAnim() {
-	}
 
 	// ------------------------------------------------------------
 	// Draw
