@@ -5,12 +5,12 @@ package math;
  *			3AHEL
  */
 
-public class VectorR2 {
+public class Vector2 {
 
 	private double x;
 	private double y;
 
-	public VectorR2(double x, double y) {
+	public Vector2(double x, double y) {
 		this.x = x;
 		this.y = y;
 	}
@@ -20,7 +20,7 @@ public class VectorR2 {
 	// ------------------------------------------------------------
 
 	public double getAngleToXAxis() {
-		VectorR2 xAxis = new VectorR2(1, 0);
+		Vector2 xAxis = new Vector2(1, 0);
 		if (y > 0) {
 			return (2 * Math.PI - (Math.acos(scalar(xAxis) / (abs() * xAxis.abs()))));
 		} else {
@@ -29,27 +29,27 @@ public class VectorR2 {
 	}
 
 	public double getAngleToYAxis() {
-		VectorR2 yAxis = new VectorR2(0, 1);
+		Vector2 yAxis = new Vector2(0, 1);
 		return Math.acos((scalar(yAxis) / (abs() * yAxis.abs())));
 	}
 
-	public VectorR2 addVec(VectorR2 a) {
-		return new VectorR2(this.x + a.x, this.y + a.y);
+	public Vector2 addVec(Vector2 a) {
+		return new Vector2(this.x + a.x, this.y + a.y);
 	}
 
-	public VectorR2 subVec(VectorR2 a) {
-		return new VectorR2(this.x - a.x, this.y - a.y);
+	public Vector2 subVec(Vector2 a) {
+		return new Vector2(this.x - a.x, this.y - a.y);
 	}
 
-	public VectorR2 normalVecCW() {
-		return new VectorR2(this.y, -this.x);
+	public Vector2 normalVecCW() {
+		return new Vector2(this.y, -this.x);
 	}
 
-	public VectorR2 normalVecCCW() {
-		return new VectorR2(-this.y, this.x);
+	public Vector2 normalVecCCW() {
+		return new Vector2(-this.y, this.x);
 	}
 
-	public double scalar(VectorR2 a) {
+	public double scalar(Vector2 a) {
 		return this.x * a.x + this.y * a.y;
 	}
 
@@ -64,7 +64,7 @@ public class VectorR2 {
 	// Getters - Setters
 	// ------------------------------------------------------------
 
-	public VectorR2 getUnitVector() { return new VectorR2((x / abs()), (y / abs())); }
+	public Vector2 getUnitVector() { return new Vector2((x / abs()), (y / abs())); }
 
 	public void setToUnitVector() {
 		x = x / abs();

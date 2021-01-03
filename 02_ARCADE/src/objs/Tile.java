@@ -5,6 +5,7 @@ import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 
 import main.Game;
+import objs.properties.Hitbox;
 
 /**
  * @author	Simon Grundner <br>
@@ -13,8 +14,8 @@ import main.Game;
 
 public class Tile extends GameObj {
 
-	public Tile(Game game) {
-		super(game);
+	public Tile(Game game, Hitbox hitbox) {
+		super(game, hitbox);
 	}
 
 	// ------------------------------------------------------------
@@ -22,7 +23,9 @@ public class Tile extends GameObj {
 	// ------------------------------------------------------------
 
 	@Override
-	public void update() {}
+	public void update() {
+		updateHitbox();
+	}
 
 	@Override
 	public void isColliding() {}

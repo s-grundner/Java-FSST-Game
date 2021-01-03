@@ -3,12 +3,13 @@ package objs;
 import java.util.ArrayList;
 
 import main.Game;
-import math.VectorR2;
+import math.Vector2;
 import objs.enumerators.EntityStats;
 import objs.enumerators.ProjectileType;
+import objs.properties.Hitbox;
 
 /**
- * @author	Simon Grundner <br>
+ * @author	Simon Grundner
  *			3AHEL
  */
 
@@ -18,20 +19,23 @@ public abstract class Entity extends GameObj {
 	protected EntityStats stats;
 	protected Projectile projectile;
 	protected ArrayList<Projectile> projectiles;
-	protected VectorR2 shootingVector;
+	protected Vector2 shootingVector;
+	protected Hitbox hitbox;
 	protected boolean isShooting;
 	protected double firingRate;
 
-	public Entity(Game game) {
-		super(game);
-		projectiles = new ArrayList<Projectile>();
-		shootingVector = new VectorR2(0, 0);
-		isShooting = false;
+	public Entity(Game game, Hitbox hitbox) {
+		super(game, hitbox);
+		this.projectiles = new ArrayList<Projectile>();
+		this.shootingVector = new Vector2(0, 0);
+		this.isShooting = false;
+		this.hitbox = hitbox;
+		
 		initStats();
 	}
 
 	public Projectile attack() {
-		return new Projectile(game, projectileType, this);
+		return new Projectile(game, projectileType.getHitbox(), projectileType, this);
 	}
 
 	public abstract void initStats();
@@ -44,9 +48,9 @@ public abstract class Entity extends GameObj {
 
 	public void setProjectileType(ProjectileType projectileType) { this.projectileType = projectileType; }
 
-	public void setShootingVector(VectorR2 shootingVector) { this.shootingVector = shootingVector; }
+	public void setShootingVector(Vector2 shootingVector) { this.shootingVector = shootingVector; }
 
-	public VectorR2 getShootingVector() {
+	public Vector2 getShootingVector() {
 		shootingVector.setVector(	shootingVector.getX(),
 									shootingVector.getY());
 		return shootingVector.getUnitVector();

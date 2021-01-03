@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import main.Game;
 import objs.Entity;
 import objs.GameObj;
-import objs.Projectile;
 import objs.properties.Hitbox;
 
 /**
@@ -47,6 +46,7 @@ public class Collision {
 						&& colHB.getPos().getY() < colObj.getPos().getY() + colObj.getSize().getHeight()
 						&& colHB.getPos().getY() + colHB.getSize().getHeight() > colObj.getPos().getY()) {
 					colObj.setColliding(true);
+					colObj.setCurrentCollision(null);
 				}
 			}
 			for (Entity colNtt : ntts) {
@@ -55,6 +55,7 @@ public class Collision {
 						&& colHB.getPos().getY() < colNtt.getPos().getY() + colNtt.getSize().getHeight()
 						&& colHB.getPos().getY() + colHB.getSize().getHeight() > colNtt.getPos().getY()) {
 					colNtt.setColliding(true);
+					colNtt.setCurrentCollision(null);
 				}
 			}
 		}
@@ -77,8 +78,6 @@ public class Collision {
 				}
 			}
 			for (Entity colNtt2 : ntts) {
-				
-				
 				if (colNtt2.getPos().getX() < colObj.getPos().getX() + colObj.getSize().getWidth()
 						&& colNtt2.getPos().getX() + colNtt2.getSize().getWidth() > colObj.getPos().getX()
 						&& colNtt2.getPos().getY() < colObj.getPos().getY() + colObj.getSize().getHeight()

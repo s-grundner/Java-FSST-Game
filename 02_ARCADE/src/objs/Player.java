@@ -6,12 +6,13 @@ import java.awt.geom.AffineTransform;
 import assets.Animation;
 import config.Config;
 import main.Game;
-import math.VectorR2;
+import math.Vector2;
 import movement.Controller;
 import objs.enumerators.EntityStats;
 import objs.enumerators.Maps;
 import objs.enumerators.ProjectileType;
 import objs.properties.Animated;
+import objs.properties.Hitbox;
 
 /**
  * @author	Simon Grundner <br>
@@ -28,18 +29,21 @@ public class Player extends Entity implements Animated {
 	private boolean charging;
 	private boolean swMap;
 	private boolean vectorUpd;
-	private VectorR2 colV;
+	private Vector2 colV;
 
-	public Player(Game game, Controller controller) {
-		super(game);
-
+	public Player(Game game, Hitbox hitbox, Controller controller) {
+		super(game, hitbox);
+		
 		this.controller = controller;
+		init();
+	}
 
+	private void init() {
 		setDefaultName("NTT_Player");
 		setImg(defaultName);
 		setProjectileType(ProjectileType.BULLET);
 		setPos(game.getMap().getSpawn());
-
+		
 		animationIndex = 0;
 		chargingIndex = 0;
 		swIndex = 0;
@@ -59,20 +63,23 @@ public class Player extends Entity implements Animated {
 
 	@Override
 	public void update() {
+		updateHitbox();
 		setShootingVector(getMouseVector());
+		
 		vectorUpd = false;
 		vector.setVector(	0,
 							0);
 		Keys();
-
+		isColliding();
+		initAnim();
+		
 		if (vectorUpd) {
 			pointingVector = vector;
 		}
 		if (!vector.equals(colV)) {
 			move(stats.getSpeed());
 		}
-		isColliding();
-		initAnim();
+		
 	}
 
 	public void Keys() {
@@ -271,8 +278,8 @@ public class Player extends Entity implements Animated {
 	// Getters - Setters
 	// ------------------------------------------------------------
 
-	public VectorR2 getMouseVector() {
-		VectorR2 vector = new VectorR2(	controller.getMousePos().getX()
+	public Vector2 getMouseVector() {
+		Vector2 vector = new Vector2(	controller.getMousePos().getX()
 												- (pos.getX() + (Config.TILESIZE / 2)) * Config.SCALE,
 										controller.getMousePos().getY()
 												- (pos.getY() + (Config.TILESIZE / 2)) * Config.SCALE);

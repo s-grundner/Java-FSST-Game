@@ -6,6 +6,7 @@ import java.awt.image.BufferedImage;
 
 import main.Game;
 import objs.enumerators.EntityStats;
+import objs.properties.Hitbox;
 import objs.properties.Position;
 
 /**
@@ -15,8 +16,8 @@ import objs.properties.Position;
 
 public class Hostile extends Entity {
 
-	public Hostile(Game game, EntityStats stats) {
-		super(game);
+	public Hostile(Game game, Hitbox hitbox, EntityStats stats) {
+		super(game, hitbox);
 		this.stats = stats;
 		setDefaultName("NA");
 		setImg(defaultName);

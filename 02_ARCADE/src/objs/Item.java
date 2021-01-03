@@ -18,7 +18,7 @@ import objs.properties.Hitbox;
 public class Item extends GameObj implements Animated {
 
 	public Item(Game game, Hitbox hitbox, ItemType itemType) {
-		super(game);
+		super(game, hitbox);
 	}
 
 	// ------------------------------------------------------------

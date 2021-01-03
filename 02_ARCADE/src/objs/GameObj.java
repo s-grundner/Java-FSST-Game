@@ -8,7 +8,8 @@ import java.awt.image.BufferedImage;
 import assets.Animation;
 import config.Config;
 import main.Game;
-import math.VectorR2;
+import math.Vector2;
+import objs.properties.Hitbox;
 import objs.properties.Position;
 import objs.properties.Size;
 import objs.properties.Spritesheet;
@@ -27,16 +28,18 @@ public abstract class GameObj {
 	protected Game game;
 	protected Size size;
 	protected Position pos;
-	protected VectorR2 vector;
-	protected VectorR2 pointingVector;
+	protected Vector2 vector;
+	protected Vector2 pointingVector;
 	protected Spritesheet spritesheet;
 	protected BufferedImage img;
 	protected String defaultName;
 	protected Animation animation;
+	protected Hitbox hitbox;
 	protected GameObj currentCollision;
 
-	public GameObj(Game game) {
+	public GameObj(Game game, Hitbox hitbox) {
 		this.game = game;
+		this.hitbox = hitbox;
 		init();
 	}
 
@@ -44,16 +47,22 @@ public abstract class GameObj {
 		colliding = false;
 		animate = true;
 		alive = true;
-		pointingVector = new VectorR2(0, 0);
-		vector = new VectorR2(0, 0);
+		pointingVector = new Vector2(0, 0);
+		vector = new Vector2(0, 0);
 		size = new Size(Config.TILESIZE, Config.TILESIZE);
 		pos = new Position(0, 0);
+		
+		hitbox.setPos(pos);
 	}
 
 	public void move(double speed) {
 		pos = new Position(pos.getX() + vector.getX() * speed, pos.getY() + vector.getY() * speed);
 	}
 
+	public void updateHitbox() {
+		hitbox.setPos(pos);
+	}
+	
 	// ------------------------------------------------------------
 	// Abstract Methods
 	// ------------------------------------------------------------
@@ -67,6 +76,8 @@ public abstract class GameObj {
 	// Getters - Setters
 	// ------------------------------------------------------------
 
+	public Hitbox getHitbox() { return hitbox; }
+	
 	public BufferedImage getImg() { return img; }
 
 	public void setImg(String name) {
@@ -87,9 +98,9 @@ public abstract class GameObj {
 
 	public Size getSize() { return size; }
 
-	public VectorR2 getVector() { return vector; }
+	public Vector2 getVector() { return vector; }
 
-	public void setVector(VectorR2 vector) { this.vector = vector; }
+	public void setVector(Vector2 vector) { this.vector = vector; }
 
 	public void setSpritesheet(String name) { spritesheet = new Spritesheet(name); }
 
