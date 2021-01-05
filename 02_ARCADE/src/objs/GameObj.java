@@ -47,11 +47,11 @@ public abstract class GameObj {
 		colliding = false;
 		animate = true;
 		alive = true;
-		pointingVector = new Vector2(0, 0);
+		pointingVector = new Vector2(1, 0);
 		vector = new Vector2(0, 0);
 		size = new Size(Config.TILESIZE, Config.TILESIZE);
 		pos = new Position(0, 0);
-		
+
 		hitbox.setPos(pos);
 	}
 
@@ -62,7 +62,7 @@ public abstract class GameObj {
 	public void updateHitbox() {
 		hitbox.setPos(pos);
 	}
-	
+
 	// ------------------------------------------------------------
 	// Abstract Methods
 	// ------------------------------------------------------------
@@ -77,7 +77,7 @@ public abstract class GameObj {
 	// ------------------------------------------------------------
 
 	public Hitbox getHitbox() { return hitbox; }
-	
+
 	public BufferedImage getImg() { return img; }
 
 	public void setImg(String name) {

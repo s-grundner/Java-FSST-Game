@@ -15,7 +15,7 @@ import objs.properties.Animated;
 import objs.properties.Hitbox;
 
 /**
- * @author	Simon Grundner <br>
+ * @author	Simon Grundner
  *			3AHEL
  */
 
@@ -28,12 +28,10 @@ public class Player extends Entity implements Animated {
 	private double nextImg = 0.0;
 	private boolean charging;
 	private boolean swMap;
-	private boolean vectorUpd;
-	private Vector2 colV;
 
 	public Player(Game game, Hitbox hitbox, Controller controller) {
 		super(game, hitbox);
-		
+
 		this.controller = controller;
 		init();
 	}
@@ -43,13 +41,12 @@ public class Player extends Entity implements Animated {
 		setImg(defaultName);
 		setProjectileType(ProjectileType.BULLET);
 		setPos(game.getMap().getSpawn());
-		
+
 		animationIndex = 0;
 		chargingIndex = 0;
 		swIndex = 0;
 		charging = false;
 		swMap = true;
-		vectorUpd = false;
 	}
 
 	@Override
@@ -65,39 +62,40 @@ public class Player extends Entity implements Animated {
 	public void update() {
 		updateHitbox();
 		setShootingVector(getMouseVector());
-		
-		vectorUpd = false;
+
 		vector.setVector(	0,
 							0);
 		Keys();
 		isColliding();
 		initAnim();
-		
-		if (vectorUpd) {
-			pointingVector = vector;
-		}
-		if (!vector.equals(colV)) {
-			move(stats.getSpeed());
-		}
-		
+
+		move(stats.getSpeed());
+		System.out.println(pointingVector.toString());
 	}
 
 	public void Keys() {
 		if (controller.reqUp()) {
 			vector.setY(-1);
-			vectorUpd = true;
+			pointingVector.setToUnitVector();
+			
+			pointingVector.setY(pointingVector.getY()-1);
 		}
 		if (controller.reqDown()) {
 			vector.setY(1);
-			vectorUpd = true;
+			pointingVector.setToUnitVector();
+			
+			pointingVector.setY(pointingVector.getY()+1);
 		}
 		if (controller.reqRight()) {
 			vector.setX(1);
-			vectorUpd = true;
+			pointingVector.setToUnitVector();
+			
+			pointingVector.setX(pointingVector.getX()+1);
 		}
 		if (controller.reqLeft()) {
 			vector.setX(-1);
-			vectorUpd = true;
+			pointingVector.setToUnitVector();
+			pointingVector.setX(pointingVector.getX()-1);
 		}
 		if (controller.reset()) {
 			setDefaultPos();
@@ -144,13 +142,15 @@ public class Player extends Entity implements Animated {
 	@Override
 	public void isColliding() {
 		if (colliding) {
-			colV = vector;
-			colliding = false;
-
-			System.out.println(colV.toString());
-		} else {
-			colV = null;
-		}
+			if (vector.getX() < 0 || vector.getX() > 0) {
+//				vector.setX(-vector.getX());
+//				stats.setSpeed(stats.getSpeed() * Math.sin(pointingVector.getAngleToXAxis()));
+			}
+			if (vector.getY() < 0 || vector.getY() > 0) {
+//				vector.setY(-vector.getY());
+//				stats.setSpeed(stats.getSpeed() * Math.cos(pointingVector.getAngleToXAxis()));
+			}
+		} else {}
 	}
 
 	// ------------------------------------------------------------
