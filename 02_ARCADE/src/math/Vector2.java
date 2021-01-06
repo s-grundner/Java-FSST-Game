@@ -28,16 +28,21 @@ public class Vector2 {
 		}
 	}
 
+	public double getSmallAngleToXAxis() {
+		Vector2 xAxis = new Vector2(1, 0);
+		return Math.acos(scalar(xAxis) / (abs() * xAxis.abs()));
+	}
+	
 	public double getAngleToYAxis() {
 		Vector2 yAxis = new Vector2(0, 1);
 		return Math.acos((scalar(yAxis) / (abs() * yAxis.abs())));
 	}
 
-	public Vector2 addVec(Vector2 a) {
+	public Vector2 add(Vector2 a) {
 		return new Vector2(this.x + a.x, this.y + a.y);
 	}
 
-	public Vector2 subVec(Vector2 a) {
+	public Vector2 sub(Vector2 a) {
 		return new Vector2(this.x - a.x, this.y - a.y);
 	}
 

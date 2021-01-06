@@ -1,6 +1,7 @@
 package objs;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
 import main.Game;
 import math.Vector2;
@@ -23,6 +24,7 @@ public abstract class Entity extends GameObj {
 	protected Hitbox hitbox;
 	protected boolean isShooting;
 	protected double firingRate;
+	protected double nextBulletTime;
 
 	public Entity(Game game, Hitbox hitbox) {
 		super(game, hitbox);
@@ -30,15 +32,37 @@ public abstract class Entity extends GameObj {
 		this.shootingVector = new Vector2(0, 0);
 		this.isShooting = false;
 		this.hitbox = hitbox;
-		
+
 		initStats();
 	}
 
-	public Projectile attack() {
-		return new Projectile(game, projectileType.getHitbox(), projectileType, this);
+	public void attack() {
+		Projectile proj = new Projectile(game, projectileType.getHitbox(), projectileType, this);
+		projectiles.add(proj);
+		game.addObjs(proj);
+	}
+
+	public void removeProjectile(Projectile projectile) {
+		projectile.setAlive(false);
+		
 	}
 
 	public abstract void initStats();
+
+	@Override
+	public void update() {
+		if ((System.currentTimeMillis() > nextBulletTime) && getShootingState()) {
+			attack();
+			nextBulletTime = System.currentTimeMillis() + getAttackSpeed();
+		}
+		
+		for (Iterator<Projectile> proji = projectiles.iterator(); proji.hasNext();) {
+			Projectile proj = proji.next();
+			if (!proj.isAlive()) {
+				proji.remove();
+			}
+		}
+	}
 
 	// ------------------------------------------------------------
 	// Getters - Setters
@@ -59,4 +83,6 @@ public abstract class Entity extends GameObj {
 	public boolean getShootingState() { return isShooting; }
 
 	public double getAttackSpeed() { return projectileType.getRate(); }
+
+	public ArrayList<Projectile> getProjectiles() { return projectiles; }
 }

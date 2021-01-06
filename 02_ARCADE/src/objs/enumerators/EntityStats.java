@@ -18,10 +18,16 @@ public enum EntityStats {
 	// ------------------------------------------------------------
 
 	private double speed;
+	private double defaultSpeed;
+	private double speedX;
+	private double speedY;
 	private int hp;
 
 	private EntityStats(double speed, int hp) {
 		this.speed = speed;
+		this.defaultSpeed = speed;
+		this.speedX = speed;
+		this.speedY = speed;
 		this.hp = hp;
 	}
 
@@ -36,4 +42,18 @@ public enum EntityStats {
 	public double getSpeed() { return speed; }
 
 	public void setSpeed(double speed) { this.speed = speed; }
+
+	public double getDefaultSpeed() { return defaultSpeed; }
+
+	public void setDefaultSpeed() {
+		this.speed = defaultSpeed;
+	}
+
+	public double getSpeedX() { return speedX; }
+
+	public void setSpeedX(double speedX) { this.speedX = speedX; }
+
+	public double getSpeedY() { return speedY; }
+
+	public void setSpeedY(double speedY) { this.speedY = speedY; }
 }

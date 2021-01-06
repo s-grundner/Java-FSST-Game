@@ -9,16 +9,17 @@ import config.Config;
 import math.Collision;
 import movement.Input;
 import movement.PlayerController;
-import objs.Entity;
 import objs.GameObj;
+import objs.Hostile;
 import objs.Player;
 import objs.enumerators.CustomHitbox;
+import objs.enumerators.EntityStats;
 import objs.enumerators.Maps;
 import objs.map.Map;
 import objs.properties.Hitbox;
 
 /**
- * @author	Simon Grundner <br>
+ * @author	Simon Grundner
  *			3AHEL
  */
 
@@ -29,11 +30,10 @@ public class Game {
 	private boolean playAudio;
 	private boolean loopAudio;
 	private long loopTime;
-	private double nextBulletTime;
 	private Gui gui;
 	private Map map;
 	private ArrayList<GameObj> objs;
-	private ArrayList<Entity> ntts;
+	private ArrayList<GameObj> add;
 	private Input input;
 	private Collision collision;
 
@@ -44,13 +44,11 @@ public class Game {
 		input = new Input();
 		gui = new Gui(Config.CANVAS_WIDTH, Config.CANVAS_HEIGHT, input);
 
-		initMap(Maps.MAP2);
+		initMap(Maps.MAP1);
 		initObjs();
 		initAudio();
 
 		collision = new Collision(this);
-		
-		nextBulletTime = 0.0;
 	}
 
 	// ------------------------------------------------------------
@@ -59,14 +57,10 @@ public class Game {
 
 	private void initObjs() {
 		objs = new ArrayList<GameObj>();
-		ntts = new ArrayList<Entity>();
-		
-//		objs.add(new Hostile(this,
-//		                     new Hitbox(CustomHitbox.OBJ_TILE),
-//		                     EntityStats.H_HOSTILE1));
-		ntts.add(new Player(this,
-		                    new Hitbox(CustomHitbox.NTT_P_PLAYER),
-							new PlayerController(input)));
+		add = new ArrayList<GameObj>();
+
+		objs.add(new Hostile(this, new Hitbox(CustomHitbox.OBJ_TILE), EntityStats.H_HOSTILE1));
+		objs.add(new Player(this, new Hitbox(CustomHitbox.NTT_P_PLAYER), new PlayerController(input)));
 	}
 
 	private void initAudio() {
@@ -85,39 +79,15 @@ public class Game {
 	// ------------------------------------------------------------
 
 	public void update() {
-
 		collision.update();
-		
-		for (GameObj obj : objs) {
-			obj.update();
-
-			if ((obj.getPos().getX() < 0 || obj.getPos().getY() < 0)
-					|| (obj.getPos().getX() > Config.CANVAS_WIDTH || obj.getPos().getY() > Config.CANVAS_HEIGHT)) {
-				obj.setAlive(false);
-			}
-		}
-		for (Entity ntt : ntts) {
-			ntt.update();
-
-			if ((System.currentTimeMillis() > nextBulletTime) && ntt.getShootingState()) {
-				objs.add(ntt.attack());
-				nextBulletTime = System.currentTimeMillis() + ntt.getAttackSpeed();
-			}
-		}
-		// ------------------------------------------------------------
-		// Iterators
-		// ------------------------------------------------------------
+		objs.addAll(add);
+		add.clear();
+		objs.forEach(obj -> obj.update());
 
 		for (Iterator<GameObj> obji = objs.iterator(); obji.hasNext();) {
 			GameObj obj = obji.next();
 			if (!obj.isAlive()) {
 				obji.remove();
-			}
-		}
-		for (Iterator<Entity> ntti = ntts.iterator(); ntti.hasNext();) {
-			Entity ntt = ntti.next();
-			if (!ntt.isAlive()) {
-				ntti.remove();
 			}
 		}
 		// ------------------------------------------------------------
@@ -153,12 +123,8 @@ public class Game {
 		return objs;
 	}
 
-	public ArrayList<Entity> parseNtts() {
-		return ntts;
-	}
-
 	public void addObjs(GameObj obj) {
-		objs.add(obj);
+		add.add(obj);
 	}
 
 	public void drawMap(Graphics2D graphics) {

@@ -15,13 +15,12 @@ import objs.properties.Size;
 import objs.properties.Spritesheet;
 
 /**
- * @author	Simon Grundner <br>
+ * @author	Simon Grundner
  *			3AHEL
  */
 
 public abstract class GameObj {
 
-	protected boolean collidable;
 	protected boolean colliding;
 	protected boolean animate;
 	protected boolean alive;
@@ -43,11 +42,15 @@ public abstract class GameObj {
 		init();
 	}
 
+	// ------------------------------------------------------------
+	//
+	// ------------------------------------------------------------
+
 	private void init() {
 		colliding = false;
 		animate = true;
 		alive = true;
-		pointingVector = new Vector2(1, 0);
+		pointingVector = new Vector2(1 + 1E-20, 0 + 1E-20);
 		vector = new Vector2(0, 0);
 		size = new Size(Config.TILESIZE, Config.TILESIZE);
 		pos = new Position(0, 0);
@@ -58,19 +61,40 @@ public abstract class GameObj {
 	public void move(double speed) {
 		pos = new Position(pos.getX() + vector.getX() * speed, pos.getY() + vector.getY() * speed);
 	}
+	
+	public void move(double speedX, double speedY, double refSpeed) {
+		if(Math.round(speedX) == 0) {
+			speedY = refSpeed * Math.sin(pointingVector.getSmallAngleToXAxis());
+			System.out.println(speedY);
+		}
+		if(Math.round(speedY) == 0) {
+			speedX = refSpeed * Math.cos(pointingVector.getSmallAngleToXAxis());
+		}
+		pos = new Position(pos.getX() + vector.getX() * speedX, pos.getY() + vector.getY() * speedY);
+	}
 
 	public void updateHitbox() {
 		hitbox.setPos(pos);
+	}
+
+	public void draw(Graphics2D graphics) {
+		Graphics2D graphics2 = (Graphics2D) graphics.create();
+		AffineTransform latch = graphics.getTransform();
+		graphics.drawImage(	getImg(),
+							transform(graphics2),
+							null);
+
+		graphics.setTransform(latch);
+		graphics2.dispose();
 	}
 
 	// ------------------------------------------------------------
 	// Abstract Methods
 	// ------------------------------------------------------------
 
+	public abstract void colliding();
 	public abstract void update();
-	public abstract void isColliding();
 	public abstract AffineTransform transform(Graphics2D graphics);
-	public abstract void draw(Graphics2D graphics);
 
 	// ------------------------------------------------------------
 	// Getters - Setters
@@ -106,8 +130,6 @@ public abstract class GameObj {
 
 	public void setColliding(boolean colliding) { this.colliding = colliding; }
 
-	public void setCollidable(boolean collidable) { this.collidable = collidable; }
-
 	public boolean isAlive() { return alive; }
 
 	public void setAlive(boolean alive) { this.alive = alive; }
@@ -116,10 +138,17 @@ public abstract class GameObj {
 
 	public GameObj getCurrentCollision() { return currentCollision; }
 
+	public boolean isColliding() { return colliding; }
+
 	// ------------------------------------------------------------
 	// Debug
 	// ------------------------------------------------------------
 
+	@Override
+	public String toString() {
+		return pos.toString();
+	}
+	
 	public String displayPos() {
 		return pos.toString();
 	}
@@ -131,6 +160,16 @@ public abstract class GameObj {
 							(int) pos.getY(),
 							2,
 							2);
+		graphics2.dispose();
+	}
+
+	public void drawOutline(Graphics2D graphics) {
+		Graphics2D graphics2 = (Graphics2D) graphics.create();
+		graphics2.setColor(Color.BLUE);
+		graphics2.drawRect(	(int) pos.getX(),
+							(int) pos.getY(),
+							(int) size.getWidth(),
+							(int) size.getHeight());
 		graphics2.dispose();
 	}
 }

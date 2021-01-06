@@ -28,7 +28,7 @@ public class Tile extends GameObj {
 	}
 
 	@Override
-	public void isColliding() {}
+	public void colliding() {}
 
 	// ------------------------------------------------------------
 	// Draw

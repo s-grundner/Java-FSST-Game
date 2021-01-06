@@ -168,7 +168,6 @@ public class Map {
 												null);
 
 							graphics2.setTransform(latch);
-							graphics2.dispose();
 						}
 					}
 				}

@@ -9,7 +9,7 @@ import objs.enumerators.ProjectileType;
 import objs.properties.Hitbox;
 
 /**
- * @author	Simon Grundner <br>
+ * @author	Simon Grundner
  *			3AHEL
  */
 
@@ -37,17 +37,40 @@ public class Projectile extends GameObj {
 
 	@Override
 	public void update() {
+		if ((getPos().getX() < 0 || getPos().getY() < 0)
+				|| (getPos().getX() > Config.CANVAS_WIDTH || getPos().getY() > Config.CANVAS_HEIGHT)) {
+			setAlive(false);
+		}
 		updateHitbox();
-		isColliding();
+		colliding();
 		move(projectile.getSpeed());
 	}
 
 	@Override
-	public void isColliding() {
-		if (!host.equals(getCurrentCollision())) {
-			if (colliding) {
-				setAlive(false);
-			} else {}
+	public void colliding() {
+//		if (colliding) {
+//			if (!host.equals(currentCollision)) {
+//				for (Projectile proj : host.getProjectiles()) {
+//					if (!proj.equals(getCurrentCollision())) {
+//						host.removeProjectile(this);
+//						break;
+//					}
+//				}
+//			}
+//		}
+		if (colliding) {
+			if (!host.equals(currentCollision)) {
+				boolean x = false;
+				for (Projectile proj : host.getProjectiles()) {
+					if (proj.equals(getCurrentCollision())) {
+						x = true;
+						break;
+					}
+				}
+				if (!x) {
+					host.removeProjectile(this);
+				}
+			}
 		}
 	}
 
@@ -57,7 +80,7 @@ public class Projectile extends GameObj {
 
 	@Override
 	public AffineTransform transform(Graphics2D graphics) {
-		AffineTransform transform = new AffineTransform();
+		AffineTransform transform;
 		transform = AffineTransform.getTranslateInstance(	pos.getX() + size.getWidth() / 2,
 															pos.getY() + size.getHeight() / 2);
 
@@ -65,28 +88,19 @@ public class Projectile extends GameObj {
 								vector.getY(),
 								pos.getX() + size.getWidth() / 2,
 								pos.getY() + size.getHeight() / 2);
+		graphics.transform(transform);
 		transform.translate(pos.getX(),
 							pos.getY());
+		graphics.transform(transform);
+
 		return transform;
 	}
-
-	@Override
-	public void draw(Graphics2D graphics) {
-		AffineTransform latch = graphics.getTransform();
-		Graphics2D graphics2 = (Graphics2D) graphics.create();
-		graphics2.drawImage(getImg(),
-							transform(graphics2),
-							null);
-		graphics2.setTransform(latch);
-		drawOrigin(graphics2);
-		graphics2.dispose();
-	}
-
-	public Entity getHost() { return host; }
-
-	public void setHost(Entity host) { this.host = host; }
 
 	// ------------------------------------------------------------
 	// Getters - Setters
 	// ------------------------------------------------------------
+
+	public Entity getHost() { return host; }
+
+	public void setHost(Entity host) { this.host = host; }
 }

@@ -1,9 +1,11 @@
 package objs.enumerators;
 
+import java.awt.image.BufferedImage;
+
 import objs.properties.Hitbox;
 
 /**
- * @author	Simon Grundner <br>
+ * @author	Simon Grundner
  *			3AHEL
  */
 
@@ -14,7 +16,8 @@ public enum ProjectileType {
 	// ------------------------------------------------------------
 
 	BULLET("WEAPON_Bullet", new Hitbox(CustomHitbox.W_PROJ_BULLET), 100, 10, 3),
-	LASER("WEAPON_Laser", new Hitbox(CustomHitbox.W_PROJ_LASER), 0, 16, 100), AOE("", new Hitbox(null, null), 0, 0, 0),
+	LASER("WEAPON_Laser", new Hitbox(CustomHitbox.W_PROJ_LASER), 0, 16, 100),
+	AOE("", new Hitbox(null, null), 0, 0, 0),
 	WAND("", new Hitbox(null, null), 0, 0, 0);
 
 	// ------------------------------------------------------------
@@ -43,6 +46,10 @@ public enum ProjectileType {
 	// Getters - Setters
 	// ------------------------------------------------------------
 
+	public BufferedImage getTowered() {
+		return null;
+	}
+	
 	public String getFileName() { return fileName; }
 
 	public void setFileName(String fileName) { this.fileName = fileName; }

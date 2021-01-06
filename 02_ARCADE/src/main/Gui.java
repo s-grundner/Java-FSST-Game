@@ -10,7 +10,6 @@ import javax.swing.JFrame;
 
 import config.Config;
 import movement.Input;
-import objs.Entity;
 import objs.GameObj;
 import objs.properties.Spritesheet;
 
@@ -57,7 +56,6 @@ public class Gui extends JFrame {
 
 	public void render(Game game) {
 		Graphics2D graphics = (Graphics2D) bs.getDrawGraphics();
-
 		graphics.drawImage(	bg.getSheet(),
 							0,
 							0,
@@ -69,14 +67,13 @@ public class Gui extends JFrame {
 						Config.SCALE);
 
 		game.drawMap(graphics);
-		game.getMap().drawHitboxes(graphics);
+//		game.getMap().drawHitboxes(graphics);
 
 		for (GameObj obj : game.parseObjs()) {
 			obj.draw(graphics);
+			obj.drawOrigin(graphics);
 		}
-		for (Entity ntt : game.parseNtts()) {
-			ntt.draw(graphics);
-		}
+
 		graphics.dispose();
 		bs.show();
 	}

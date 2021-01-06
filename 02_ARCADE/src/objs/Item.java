@@ -31,7 +31,7 @@ public class Item extends GameObj implements Animated {
 	}
 
 	@Override
-	public void isColliding() {}
+	public void colliding() {}
 
 	// ------------------------------------------------------------
 	// Animate
@@ -48,10 +48,6 @@ public class Item extends GameObj implements Animated {
 	// ------------------------------------------------------------
 	// Draw
 	// ------------------------------------------------------------
-
-	@Override
-	public void draw(Graphics2D graphics) {
-	}
 
 	@Override
 	public AffineTransform transform(Graphics2D graphics) {

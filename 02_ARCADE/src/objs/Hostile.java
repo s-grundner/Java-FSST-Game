@@ -2,15 +2,15 @@ package objs;
 
 import java.awt.Graphics2D;
 import java.awt.geom.AffineTransform;
-import java.awt.image.BufferedImage;
 
 import main.Game;
 import objs.enumerators.EntityStats;
+import objs.enumerators.ProjectileType;
 import objs.properties.Hitbox;
 import objs.properties.Position;
 
 /**
- * @author	Simon Grundner <br>
+ * @author	Simon Grundner
  *			3AHEL
  */
 
@@ -21,6 +21,7 @@ public class Hostile extends Entity {
 		this.stats = stats;
 		setDefaultName("NA");
 		setImg(defaultName);
+		setProjectileType(ProjectileType.BULLET);
 		setPos(game.getMap().getSpawn());
 	}
 
@@ -37,12 +38,10 @@ public class Hostile extends Entity {
 	}
 
 	@Override
-	public Projectile attack() {
-		return null;
-	}
+	public void attack() {}
 
 	@Override
-	public void isColliding() {}
+	public void colliding() {}
 
 	// ------------------------------------------------------------
 	// Draw
@@ -53,29 +52,16 @@ public class Hostile extends Entity {
 		AffineTransform transform;
 		transform = AffineTransform.getTranslateInstance(	pos.getX() + size.getWidth() / 2,
 															pos.getY() + size.getHeight() / 2);
+		transform.setToRotation(vector.getX(),
+								vector.getY(),
+								pos.getX() + size.getWidth() / 2,
+								pos.getY() + size.getHeight() / 2);
+		graphics.transform(transform);
+
 		transform.translate(pos.getX(),
 							pos.getY());
 		graphics.transform(transform);
 
 		return transform;
 	}
-
-	@Override
-	public void draw(Graphics2D graphics) {
-		Graphics2D graphics2 = (Graphics2D) graphics.create();
-		AffineTransform latch = graphics2.getTransform();
-		graphics.drawImage(	getImg(),
-							transform(graphics2),
-							null);
-
-		graphics.setTransform(latch);
-		graphics.dispose();
-	}
-
-	// ------------------------------------------------------------
-	// Getters - Setters
-	// ------------------------------------------------------------
-
-	@Override
-	public BufferedImage getImg() { return null; }
 }

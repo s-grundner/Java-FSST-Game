@@ -28,6 +28,7 @@ public class Player extends Entity implements Animated {
 	private double nextImg = 0.0;
 	private boolean charging;
 	private boolean swMap;
+	private boolean saveVector;
 
 	public Player(Game game, Hitbox hitbox, Controller controller) {
 		super(game, hitbox);
@@ -44,9 +45,10 @@ public class Player extends Entity implements Animated {
 
 		animationIndex = 0;
 		chargingIndex = 0;
-		swIndex = 0;
+		swIndex = 1;
 		charging = false;
 		swMap = true;
+		saveVector = true;
 	}
 
 	@Override
@@ -60,42 +62,42 @@ public class Player extends Entity implements Animated {
 
 	@Override
 	public void update() {
+		super.update();
 		updateHitbox();
 		setShootingVector(getMouseVector());
 
 		vector.setVector(	0,
 							0);
 		Keys();
-		isColliding();
+		colliding();
 		initAnim();
 
 		move(stats.getSpeed());
-		System.out.println(pointingVector.toString());
 	}
 
 	public void Keys() {
 		if (controller.reqUp()) {
 			vector.setY(-1);
 			pointingVector.setToUnitVector();
-			
-			pointingVector.setY(pointingVector.getY()-1);
+
+			pointingVector.setY(pointingVector.getY() - 1);
 		}
 		if (controller.reqDown()) {
 			vector.setY(1);
 			pointingVector.setToUnitVector();
-			
-			pointingVector.setY(pointingVector.getY()+1);
+
+			pointingVector.setY(pointingVector.getY() + 1);
 		}
 		if (controller.reqRight()) {
 			vector.setX(1);
 			pointingVector.setToUnitVector();
-			
-			pointingVector.setX(pointingVector.getX()+1);
+
+			pointingVector.setX(pointingVector.getX() + 1);
 		}
 		if (controller.reqLeft()) {
 			vector.setX(-1);
 			pointingVector.setToUnitVector();
-			pointingVector.setX(pointingVector.getX()-1);
+			pointingVector.setX(pointingVector.getX() - 1);
 		}
 		if (controller.reset()) {
 			setDefaultPos();
@@ -140,17 +142,37 @@ public class Player extends Entity implements Animated {
 	}
 
 	@Override
-	public void isColliding() {
+	public void colliding() {
 		if (colliding) {
-			if (vector.getX() < 0 || vector.getX() > 0) {
-//				vector.setX(-vector.getX());
-//				stats.setSpeed(stats.getSpeed() * Math.sin(pointingVector.getAngleToXAxis()));
+			if (vector.getX() < 0) {
+				stats.setSpeedX(0);
+			} else if (vector.getY() < 0) {
+				stats.setSpeedY(0);
+			} else if (vector.getX() > 0) {
+				stats.setSpeedX(0);
+			} else if (vector.getY() > 0) {
+				stats.setSpeedY(0);
 			}
-			if (vector.getY() < 0 || vector.getY() > 0) {
-//				vector.setY(-vector.getY());
-//				stats.setSpeed(stats.getSpeed() * Math.cos(pointingVector.getAngleToXAxis()));
+			if (vector.getX() < 0 && vector.getY() < 0) {
+				stats.setSpeedX(0);
+				stats.setSpeedY(0);
+			} else if (vector.getX() < 0 && vector.getY() > 0) {
+				stats.setSpeedX(0);
+				stats.setSpeedY(0);
+			} else if (vector.getX() > 0 && vector.getY() < 0) {
+				stats.setSpeedX(0);
+				stats.setSpeedY(0);
+			} else if (vector.getX() > 0 && vector.getY() > 0) {
+				stats.setSpeedX(0);
+				stats.setSpeedY(0);
 			}
-		} else {}
+		} else
+
+		{
+			saveVector = true;
+			stats.setSpeedX(stats.getDefaultSpeed());
+			stats.setSpeedY(stats.getDefaultSpeed());
+		}
 	}
 
 	// ------------------------------------------------------------
@@ -260,18 +282,6 @@ public class Player extends Entity implements Animated {
 		graphics.transform(transform);
 
 		return transform;
-	}
-
-	@Override
-	public void draw(Graphics2D graphics) {
-		Graphics2D graphics2 = (Graphics2D) graphics.create();
-		AffineTransform latch = graphics2.getTransform();
-		graphics.drawImage(	getImg(),
-							transform(graphics2),
-							null);
-
-		graphics.setTransform(latch);
-		graphics.dispose();
 	}
 
 	// ------------------------------------------------------------
