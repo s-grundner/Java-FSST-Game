@@ -4,7 +4,7 @@ import config.Config;
 import objs.enumerators.CustomHitbox;
 
 /**
- * @author	Simon Grundner <br>
+ * @author	Simon Grundner
  *			3AHEL
  */
 
@@ -39,4 +39,6 @@ public class Hitbox {
 	}
 
 	public void setPos(Position pos) { this.pos = pos; }
+
+	
 }

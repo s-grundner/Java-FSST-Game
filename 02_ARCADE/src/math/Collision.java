@@ -41,6 +41,7 @@ public class Collision {
 						&& colHB.getPos().getY() + colHB.getSize().getHeight() > colObj.getPos().getY()) {
 					colObj.setColliding(true);
 					colObj.setCurrentCollision(null);
+					colObj.setCurrentHitboxCollision(colHB);
 				}
 			}
 		}

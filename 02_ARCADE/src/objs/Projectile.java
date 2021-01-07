@@ -41,7 +41,6 @@ public class Projectile extends GameObj {
 				|| (getPos().getX() > Config.CANVAS_WIDTH || getPos().getY() > Config.CANVAS_HEIGHT)) {
 			setAlive(false);
 		}
-		updateHitbox();
 		colliding();
 		move(projectile.getSpeed());
 	}

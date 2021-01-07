@@ -24,7 +24,6 @@ public class Tile extends GameObj {
 
 	@Override
 	public void update() {
-		updateHitbox();
 	}
 
 	@Override

@@ -29,12 +29,14 @@ public abstract class GameObj {
 	protected Position pos;
 	protected Vector2 vector;
 	protected Vector2 pointingVector;
+	protected Vector2 collisionVector;
 	protected Spritesheet spritesheet;
 	protected BufferedImage img;
 	protected String defaultName;
 	protected Animation animation;
 	protected Hitbox hitbox;
 	protected GameObj currentCollision;
+	protected Hitbox currentHitboxCollision;
 
 	public GameObj(Game game, Hitbox hitbox) {
 		this.game = game;
@@ -50,8 +52,8 @@ public abstract class GameObj {
 		colliding = false;
 		animate = true;
 		alive = true;
-		pointingVector = new Vector2(1 + 1E-20, 0 + 1E-20);
 		vector = new Vector2(0, 0);
+		pointingVector = new Vector2(1 + 1E-20, 0 + 1E-20);
 		size = new Size(Config.TILESIZE, Config.TILESIZE);
 		pos = new Position(0, 0);
 
@@ -61,20 +63,15 @@ public abstract class GameObj {
 	public void move(double speed) {
 		pos = new Position(pos.getX() + vector.getX() * speed, pos.getY() + vector.getY() * speed);
 	}
-	
-	public void move(double speedX, double speedY, double refSpeed) {
-		if(Math.round(speedX) == 0) {
-			speedY = refSpeed * Math.sin(pointingVector.getSmallAngleToXAxis());
-			System.out.println(speedY);
-		}
-		if(Math.round(speedY) == 0) {
-			speedX = refSpeed * Math.cos(pointingVector.getSmallAngleToXAxis());
-		}
-		pos = new Position(pos.getX() + vector.getX() * speedX, pos.getY() + vector.getY() * speedY);
-	}
 
-	public void updateHitbox() {
-		hitbox.setPos(pos);
+	public void move(double speedX, double speedY, double refSpeed) {
+//		if (Math.round(speedX) == 0) {
+//			speedY = refSpeed * Math.sin(pointingVector.getSmallAngleToXAxis());
+//		}
+//		if (Math.round(speedY) == 0) {
+//			speedX = refSpeed * Math.cos(pointingVector.getSmallAngleToXAxis());
+//		}
+		pos = new Position(pos.getX() + vector.getX() * speedX, pos.getY() + vector.getY() * speedY);
 	}
 
 	public void draw(Graphics2D graphics) {
@@ -130,6 +127,8 @@ public abstract class GameObj {
 
 	public void setColliding(boolean colliding) { this.colliding = colliding; }
 
+	public boolean isColliding() { return colliding; }
+
 	public boolean isAlive() { return alive; }
 
 	public void setAlive(boolean alive) { this.alive = alive; }
@@ -138,7 +137,13 @@ public abstract class GameObj {
 
 	public GameObj getCurrentCollision() { return currentCollision; }
 
-	public boolean isColliding() { return colliding; }
+	public Hitbox getCurrentHitboxCollision() { return currentHitboxCollision; }
+
+	public void setCurrentHitboxCollision(Hitbox currentHitboxCollision) {
+		this.currentHitboxCollision = currentHitboxCollision;
+	}
+
+	public void setCollisionVector(Vector2 collisionVector) { this.collisionVector = collisionVector; }
 
 	// ------------------------------------------------------------
 	// Debug
@@ -148,7 +153,7 @@ public abstract class GameObj {
 	public String toString() {
 		return pos.toString();
 	}
-	
+
 	public String displayPos() {
 		return pos.toString();
 	}
