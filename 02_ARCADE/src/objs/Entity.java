@@ -7,7 +7,6 @@ import main.Game;
 import math.Vector2;
 import objs.enumerators.EntityStats;
 import objs.enumerators.ProjectileType;
-import objs.properties.Hitbox;
 
 /**
  * @author	Simon Grundner
@@ -21,23 +20,21 @@ public abstract class Entity extends GameObj {
 	protected Projectile projectile;
 	protected ArrayList<Projectile> projectiles;
 	protected Vector2 shootingVector;
-	protected Hitbox hitbox;
 	protected boolean isShooting;
 	protected double firingRate;
 	protected double nextBulletTime;
 
-	public Entity(Game game, Hitbox hitbox) {
-		super(game, hitbox);
+	public Entity(Game game) {
+		super(game);
 		this.projectiles = new ArrayList<Projectile>();
 		this.shootingVector = new Vector2(0, 0);
 		this.isShooting = false;
-		this.hitbox = hitbox;
 
 		initStats();
 	}
 
 	public void attack() {
-		Projectile proj = new Projectile(game, projectileType.getHitbox(), projectileType, this);
+		Projectile proj = new Projectile(game, projectileType, this);
 		projectiles.add(proj);
 		game.addObjs(proj);
 	}

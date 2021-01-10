@@ -6,7 +6,6 @@ import java.awt.geom.AffineTransform;
 import config.Config;
 import main.Game;
 import objs.enumerators.ProjectileType;
-import objs.properties.Hitbox;
 
 /**
  * @author	Simon Grundner
@@ -18,8 +17,8 @@ public class Projectile extends GameObj {
 	private ProjectileType projectile;
 	private Entity host;
 
-	public Projectile(Game game, Hitbox hitbox, ProjectileType projectile, Entity host) {
-		super(game, hitbox);
+	public Projectile(Game game, ProjectileType projectile, Entity host) {
+		super(game);
 		this.host = host;
 		this.projectile = projectile;
 		this.vector = host.getShootingVector();

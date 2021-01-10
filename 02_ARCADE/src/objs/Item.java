@@ -8,7 +8,6 @@ import assets.Animation;
 import main.Game;
 import objs.enumerators.ItemType;
 import objs.properties.Animated;
-import objs.properties.Hitbox;
 
 /**
  * @author	Simon Grundner <br>
@@ -17,8 +16,8 @@ import objs.properties.Hitbox;
 
 public class Item extends GameObj implements Animated {
 
-	public Item(Game game, Hitbox hitbox, ItemType itemType) {
-		super(game, hitbox);
+	public Item(Game game, ItemType itemType) {
+		super(game);
 	}
 
 	// ------------------------------------------------------------

@@ -34,13 +34,11 @@ public abstract class GameObj {
 	protected BufferedImage img;
 	protected String defaultName;
 	protected Animation animation;
-	protected Hitbox hitbox;
+	protected Hitbox currentCollisionHitbox;
 	protected GameObj currentCollision;
-	protected Hitbox currentHitboxCollision;
 
-	public GameObj(Game game, Hitbox hitbox) {
+	public GameObj(Game game) {
 		this.game = game;
-		this.hitbox = hitbox;
 		init();
 	}
 
@@ -56,8 +54,6 @@ public abstract class GameObj {
 		pointingVector = new Vector2(1 + 1E-20, 0 + 1E-20);
 		size = new Size(Config.TILESIZE, Config.TILESIZE);
 		pos = new Position(0, 0);
-
-		hitbox.setPos(pos);
 	}
 
 	public void move(double speed) {
@@ -65,12 +61,12 @@ public abstract class GameObj {
 	}
 
 	public void move(double speedX, double speedY, double refSpeed) {
-//		if (Math.round(speedX) == 0) {
-//			speedY = refSpeed * Math.sin(pointingVector.getSmallAngleToXAxis());
-//		}
-//		if (Math.round(speedY) == 0) {
-//			speedX = refSpeed * Math.cos(pointingVector.getSmallAngleToXAxis());
-//		}
+		if (Math.round(speedX) == 0) {
+			speedY = refSpeed * Math.sin(pointingVector.getSmallAngleToXAxis());
+		}
+		if (Math.round(speedY) == 0) {
+			speedX = refSpeed * Math.cos(pointingVector.getSmallAngleToXAxis());
+		}
 		pos = new Position(pos.getX() + vector.getX() * speedX, pos.getY() + vector.getY() * speedY);
 	}
 
@@ -96,8 +92,6 @@ public abstract class GameObj {
 	// ------------------------------------------------------------
 	// Getters - Setters
 	// ------------------------------------------------------------
-
-	public Hitbox getHitbox() { return hitbox; }
 
 	public BufferedImage getImg() { return img; }
 
@@ -133,17 +127,16 @@ public abstract class GameObj {
 
 	public void setAlive(boolean alive) { this.alive = alive; }
 
-	public void setCurrentCollision(GameObj obj) { currentCollision = obj; }
-
-	public GameObj getCurrentCollision() { return currentCollision; }
-
-	public Hitbox getCurrentHitboxCollision() { return currentHitboxCollision; }
-
-	public void setCurrentHitboxCollision(Hitbox currentHitboxCollision) {
-		this.currentHitboxCollision = currentHitboxCollision;
+	public void setCurrentCollision(GameObj obj) {
+		currentCollision = obj;
+		currentCollisionHitbox = new Hitbox(obj.getSize(), obj.getPos());
 	}
 
-	public void setCollisionVector(Vector2 collisionVector) { this.collisionVector = collisionVector; }
+	public void setCurrentCollisionHitbox(Hitbox hitbox) { this.currentCollisionHitbox = hitbox; }
+
+	public Hitbox getCurrentCollisionHitbox() { return currentCollisionHitbox; }
+
+	public GameObj getCurrentCollision() { return currentCollision; }
 
 	// ------------------------------------------------------------
 	// Debug

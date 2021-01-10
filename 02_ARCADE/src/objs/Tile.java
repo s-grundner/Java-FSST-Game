@@ -5,7 +5,6 @@ import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 
 import main.Game;
-import objs.properties.Hitbox;
 
 /**
  * @author	Simon Grundner <br>
@@ -14,8 +13,8 @@ import objs.properties.Hitbox;
 
 public class Tile extends GameObj {
 
-	public Tile(Game game, Hitbox hitbox) {
-		super(game, hitbox);
+	public Tile(Game game) {
+		super(game);
 	}
 
 	// ------------------------------------------------------------

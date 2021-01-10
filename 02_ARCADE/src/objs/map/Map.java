@@ -19,7 +19,6 @@ import config.Config;
 import main.Game;
 import math.GameScaler;
 import objs.Tile;
-import objs.enumerators.CustomHitbox;
 import objs.enumerators.Maps;
 import objs.properties.Hitbox;
 import objs.properties.Position;
@@ -111,7 +110,7 @@ public class Map {
 		for (int i = 0; i < layers; i++) {
 			for (int j = 0; j < height; j++) {
 				for (int k = 0; k < width; k++) {
-					tiles[i][j][k] = new Tile(game, new Hitbox(CustomHitbox.OBJ_TILE));
+					tiles[i][j][k] = new Tile(game);
 					tiles[i][j][k].setPos(new Position(k * Config.TILESIZE, j * Config.TILESIZE));
 
 					if (contents[i][j][k] != 0) {

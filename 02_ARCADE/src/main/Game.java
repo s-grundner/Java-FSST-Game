@@ -12,11 +12,9 @@ import movement.PlayerController;
 import objs.GameObj;
 import objs.Hostile;
 import objs.Player;
-import objs.enumerators.CustomHitbox;
 import objs.enumerators.EntityStats;
 import objs.enumerators.Maps;
 import objs.map.Map;
-import objs.properties.Hitbox;
 
 /**
  * @author	Simon Grundner
@@ -59,8 +57,8 @@ public class Game {
 		objs = new ArrayList<GameObj>();
 		add = new ArrayList<GameObj>();
 
-		objs.add(new Hostile(this, new Hitbox(CustomHitbox.OBJ_TILE), EntityStats.H_HOSTILE1));
-		objs.add(new Player(this, new Hitbox(CustomHitbox.NTT_P_PLAYER), new PlayerController(input)));
+		objs.add(new Hostile(this, EntityStats.H_HOSTILE1));
+		objs.add(new Player(this, new PlayerController(input)));
 	}
 
 	private void initAudio() {

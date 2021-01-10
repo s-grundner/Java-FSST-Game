@@ -40,8 +40,7 @@ public class Collision {
 						&& colHB.getPos().getY() < colObj.getPos().getY() + colObj.getSize().getHeight()
 						&& colHB.getPos().getY() + colHB.getSize().getHeight() > colObj.getPos().getY()) {
 					colObj.setColliding(true);
-					colObj.setCurrentCollision(null);
-					colObj.setCurrentHitboxCollision(colHB);
+					colObj.setCurrentCollisionHitbox(colHB);
 				}
 			}
 		}
@@ -55,11 +54,11 @@ public class Collision {
 							&& colObj2.getPos().getX() + colObj2.getSize().getWidth() > colObj.getPos().getX()
 							&& colObj2.getPos().getY() < colObj.getPos().getY() + colObj.getSize().getHeight()
 							&& colObj2.getPos().getY() + colObj2.getSize().getHeight() > colObj.getPos().getY()) {
-						colObj2.setColliding(true);
+//						colObj2.setColliding(true);
 						colObj.setColliding(true);
 
 						colObj.setCurrentCollision(colObj2);
-						colObj2.setCurrentCollision(colObj);
+//						colObj2.setCurrentCollision(colObj);
 					}
 				}
 			}

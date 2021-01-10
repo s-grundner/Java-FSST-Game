@@ -29,16 +29,13 @@ public class Hitbox {
 	public Position getOffset() {
 		return new Position((Config.TILESIZE - size.getWidth()) / 2, (Config.TILESIZE - size.getHeight()) / 2);
 	}
-	
+
 	public Size getSize() { return size; }
 
 	public void setSize(Size size) { this.size = size; }
 
-	public Position getPos() {
-		return new Position(pos.getX(), pos.getY());
-	}
+	public Position getPos() { return new Position(pos.getX(), pos.getY()); }
 
 	public void setPos(Position pos) { this.pos = pos; }
 
-	
 }

@@ -12,7 +12,7 @@ import objs.enumerators.EntityStats;
 import objs.enumerators.Maps;
 import objs.enumerators.ProjectileType;
 import objs.properties.Animated;
-import objs.properties.Hitbox;
+import objs.properties.Position;
 
 /**
  * @author	Simon Grundner
@@ -28,9 +28,10 @@ public class Player extends Entity implements Animated {
 	private double nextImg = 0.0;
 	private boolean charging;
 	private boolean swMap;
+	private Position prevPos;
 
-	public Player(Game game, Hitbox hitbox, Controller controller) {
-		super(game, hitbox);
+	public Player(Game game, Controller controller) {
+		super(game);
 
 		this.controller = controller;
 		init();
@@ -41,6 +42,7 @@ public class Player extends Entity implements Animated {
 		setImg(defaultName);
 		setProjectileType(ProjectileType.BULLET);
 		setPos(game.getMap().getSpawn());
+		prevPos = pos;
 
 		animationIndex = 0;
 		chargingIndex = 0;
@@ -139,18 +141,13 @@ public class Player extends Entity implements Animated {
 	@Override
 	public void colliding() {
 		if (colliding) {
-			if (vector.getX() < 0) {
-				stats.setSpeedX(0);
-			} else if (vector.getX() > 0) {
-				stats.setSpeedX(0);
-			} else if (vector.getY() < 0) {
-				stats.setSpeedY(0);
-			} else if (vector.getY() > 0) {
-				stats.setSpeedY(0);
-			} else {}
+			if(vector.getX() > getCurrentCollisionHitbox().getPos().getX()) {
+//				pos = prevPos;
+				System.out.println(121);
+			}
+		
 		} else {
-			stats.setSpeedX(stats.getDefaultSpeed());
-			stats.setSpeedY(stats.getDefaultSpeed());
+			prevPos = pos;
 		}
 	}
 
