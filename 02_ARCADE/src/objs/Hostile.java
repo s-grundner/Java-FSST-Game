@@ -59,21 +59,21 @@ public class Hostile extends Entity {
 //			vector = Vector2.getRandom(vector);
 			
 
-//			if (getCurrentCollision() instanceof Projectile) {
-//				Projectile hitMark = (Projectile) getCurrentCollision();
-//				if (hit) {
-//					hit = false;
-//					type.setHp(type.getHp() - hitMark.getProjectile().getDmg());
-//				}
-//				if (type.getHp() < 0) {
-//					setAlive(false);
-//				}
-//			} else {
-//				
-//				
-//				vector = new Vector2(Vector2.getRandom(vector).getUnitVector());
-//				
-//			}
+			if (getCurrentCollision() instanceof Projectile) {
+				Projectile hitMark = (Projectile) getCurrentCollision();
+				if (hit) {
+					hit = false;
+					type.setHp(type.getHp() - hitMark.getProjectile().getDmg());
+				}
+				if (type.getHp() < 0) {
+					setAlive(false);
+				}
+			} else {
+				
+				
+				vector = new Vector2(Vector2.getRandom(vector).getUnitVector());
+				
+			}
 		} else {
 			prevPos = pos;
 			hit = true;
