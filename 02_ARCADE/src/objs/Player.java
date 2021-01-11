@@ -8,7 +8,7 @@ import config.Config;
 import main.Game;
 import math.Vector2;
 import movement.Controller;
-import objs.enumerators.EntityStats;
+import objs.enumerators.PlayerStats;
 import objs.enumerators.Maps;
 import objs.enumerators.ProjectileType;
 import objs.properties.Animated;
@@ -22,18 +22,18 @@ import objs.properties.Position;
 public class Player extends Entity implements Animated {
 
 	private Controller controller;
+	private PlayerStats stats;
 	private int animationIndex;
 	private int chargingIndex;
 	private int swIndex;
 	private double nextImg = 0.0;
 	private boolean charging;
 	private boolean swMap;
-	private Position prevPos;
 
 	public Player(Game game, Controller controller) {
 		super(game);
-
 		this.controller = controller;
+		
 		init();
 	}
 
@@ -42,18 +42,12 @@ public class Player extends Entity implements Animated {
 		setImg(defaultName);
 		setProjectileType(ProjectileType.BULLET);
 		setPos(game.getMap().getSpawn());
-		prevPos = pos;
-
+		stats = PlayerStats.P_DEFAULT;
 		animationIndex = 0;
 		chargingIndex = 0;
 		swIndex = 1;
 		charging = false;
 		swMap = true;
-	}
-
-	@Override
-	public void initStats() {
-		stats = EntityStats.P_DEFAULT;
 	}
 
 	// ------------------------------------------------------------
@@ -101,9 +95,9 @@ public class Player extends Entity implements Animated {
 		}
 		if (controller.evade()) {
 			Animation.P_EVADE.setActive(true);
-			stats = EntityStats.P_EVADE;
+			stats = PlayerStats.P_EVADE;
 		} else {
-			stats = EntityStats.P_DEFAULT;
+			stats = PlayerStats.P_DEFAULT;
 		}
 		if (controller.shoot()) {
 			isShooting = true;
@@ -141,11 +135,7 @@ public class Player extends Entity implements Animated {
 	@Override
 	public void colliding() {
 		if (colliding) {
-			if(vector.getX() > getCurrentCollisionHitbox().getPos().getX()) {
-//				pos = prevPos;
-				System.out.println(121);
-			}
-		
+			pos = prevPos;
 		} else {
 			prevPos = pos;
 		}

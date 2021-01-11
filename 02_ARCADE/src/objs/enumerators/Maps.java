@@ -11,7 +11,8 @@ public enum Maps {
 	// Enumerator (Maps)
 	// ------------------------------------------------------------
 
-	MAP1("map1", "MAP_map1"), MAP2("map2", "MAP_map1"), MAP3("map3", "MAP_map1");
+	MAP1("map1", "MAP_map1"),
+	MAP2("map2", "MAP_map1");
 
 	// ------------------------------------------------------------
 	// Members - Constructor

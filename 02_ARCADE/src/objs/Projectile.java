@@ -101,4 +101,6 @@ public class Projectile extends GameObj {
 	public Entity getHost() { return host; }
 
 	public void setHost(Entity host) { this.host = host; }
+	
+	public ProjectileType getProjectile() { return projectile; }
 }

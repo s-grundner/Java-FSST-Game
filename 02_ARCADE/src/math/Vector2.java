@@ -1,5 +1,7 @@
 package math;
 
+import java.util.Random;
+
 /**
  * @author	Simon Grundner
  *			3AHEL
@@ -15,6 +17,11 @@ public class Vector2 {
 		this.y = y;
 	}
 
+	public Vector2(Vector2 vector) {
+		this.x = vector.getX();
+		this.y = vector.getY();
+	}
+	
 	// ------------------------------------------------------------
 	// Math
 	// ------------------------------------------------------------
@@ -32,11 +39,6 @@ public class Vector2 {
 		Vector2 xAxis = new Vector2(1, 0);
 		return Math.acos(scalar(xAxis) / (abs() * xAxis.abs()));
 	}
-	
-	public double getAngleToYAxis() {
-		Vector2 yAxis = new Vector2(0, 1);
-		return Math.acos((scalar(yAxis) / (abs() * yAxis.abs())));
-	}
 
 	public Vector2 add(Vector2 a) {
 		return new Vector2(this.x + a.x, this.y + a.y);
@@ -44,14 +46,6 @@ public class Vector2 {
 
 	public Vector2 sub(Vector2 a) {
 		return new Vector2(this.x - a.x, this.y - a.y);
-	}
-
-	public Vector2 normalVecCW() {
-		return new Vector2(this.y, -this.x);
-	}
-
-	public Vector2 normalVecCCW() {
-		return new Vector2(-this.y, this.x);
 	}
 
 	public double scalar(Vector2 a) {
@@ -81,6 +75,15 @@ public class Vector2 {
 		this.y = y;
 	}
 
+	public void setVector(Vector2 vector) {
+		this.x = vector.getX();
+		this.y = vector.getY();
+	}
+	public void setVector(double angle) {
+		this.x = Math.cos(angle);
+		this.y = Math.sin(angle);
+	}
+
 	public double getX() { return x; }
 
 	public void setX(double x) { this.x = x; }
@@ -89,6 +92,45 @@ public class Vector2 {
 
 	public void setY(double y) { this.y = y; }
 
+	public static Vector2 getRandom() {
+		Random rnd = new Random();
+		return new Vector2(rnd.nextInt(100) - 50, rnd.nextInt(100) - 50);
+	}
+
+	public static Vector2 getRandom(Vector2 vector) {
+		Random rnd = new Random();
+		Vector2 ret = vector.getReverseVec();
+		double x = rnd.nextInt(100)-50;
+		double y = rnd.nextInt(100)-50;
+		
+//		if (vector.getX() < 0 && vector.getY() < 0) {
+//			x = rnd.nextInt(50)+1;
+//			y = rnd.nextInt(50)+1;
+//		} else if (vector.getX() < 0 && vector.getY() > 0) {
+//			x = rnd.nextInt(50)+1;
+//			y = -rnd.nextInt(50)+1;
+//		} else if (vector.getX() > 0 && vector.getY() < 0) {
+//			x = -rnd.nextInt(50)+1;
+//			y = rnd.nextInt(50)+1;
+//		} else if (vector.getX() > 0 && vector.getY() > 0) {
+//			x = -rnd.nextInt(50)+1;
+//			y = -rnd.nextInt(50)+1;
+//		}
+		return new Vector2(x, y);
+	}
+
+	public Vector2 getNormalVecCW() {
+		return new Vector2(this.y, -this.x);
+	}
+
+	public Vector2 getNormalVecCCW() {
+		return new Vector2(-this.y, this.x);
+	}
+	
+	public Vector2 getReverseVec() {
+		return new Vector2(-this.x, -this.y); 
+	}
+	
 	// ------------------------------------------------------------
 	// Debug
 	// ------------------------------------------------------------

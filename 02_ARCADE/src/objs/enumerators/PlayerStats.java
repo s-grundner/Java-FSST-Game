@@ -5,7 +5,7 @@ package objs.enumerators;
  *			3AHEL
  */
 
-public enum EntityStats {
+public enum PlayerStats {
 
 	// ------------------------------------------------------------
 	// Enumerators (Entities)
@@ -23,7 +23,7 @@ public enum EntityStats {
 	private double speedY;
 	private int hp;
 
-	private EntityStats(double speed, int hp) {
+	private PlayerStats(double speed, int hp) {
 		this.speed = speed;
 		this.defaultSpeed = speed;
 		this.speedX = speed;

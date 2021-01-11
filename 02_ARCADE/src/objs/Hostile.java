@@ -4,7 +4,8 @@ import java.awt.Graphics2D;
 import java.awt.geom.AffineTransform;
 
 import main.Game;
-import objs.enumerators.EntityStats;
+import math.Vector2;
+import objs.enumerators.HostileType;
 import objs.enumerators.ProjectileType;
 import objs.properties.Position;
 
@@ -15,17 +16,23 @@ import objs.properties.Position;
 
 public class Hostile extends Entity {
 
-	public Hostile(Game game, EntityStats stats) {
+	private HostileType type;
+	private long nextVectorTime;
+
+	public Hostile(Game game, HostileType type) {
 		super(game);
-		this.stats = stats;
+		this.type = type;
+
+		init();
+	}
+
+	private void init() {
 		setDefaultName("NA");
 		setImg(defaultName);
 		setProjectileType(ProjectileType.BULLET);
-		setPos(game.getMap().getSpawn());
+		setPos(new Position(200, 200));
+		vector = new Vector2(Vector2.getRandom().getUnitVector());
 	}
-
-	@Override
-	public void initStats() {}
 
 	// ------------------------------------------------------------
 	// update
@@ -33,14 +40,45 @@ public class Hostile extends Entity {
 
 	@Override
 	public void update() {
-		pos = new Position(200, 200);
+//		if (System.currentTimeMillis() > nextVectorTime) {
+//			vector = new Vector2(Vector2.getRandom().getUnitVector());
+//			nextVectorTime = System.currentTimeMillis() + type.getNextVectorTime();
+//		}
+		move(type.getSpeed());
+		colliding();
 	}
 
 	@Override
 	public void attack() {}
 
 	@Override
-	public void colliding() {}
+	public void colliding() {
+		if (colliding) {
+			pos = prevPos; 
+//			vector = vector.getReverseVec();
+//			vector = Vector2.getRandom(vector);
+			
+
+//			if (getCurrentCollision() instanceof Projectile) {
+//				Projectile hitMark = (Projectile) getCurrentCollision();
+//				if (hit) {
+//					hit = false;
+//					type.setHp(type.getHp() - hitMark.getProjectile().getDmg());
+//				}
+//				if (type.getHp() < 0) {
+//					setAlive(false);
+//				}
+//			} else {
+//				
+//				
+//				vector = new Vector2(Vector2.getRandom(vector).getUnitVector());
+//				
+//			}
+		} else {
+			prevPos = pos;
+			hit = true;
+		}
+	}
 
 	// ------------------------------------------------------------
 	// Draw

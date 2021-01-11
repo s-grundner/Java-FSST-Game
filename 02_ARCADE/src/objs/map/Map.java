@@ -37,6 +37,7 @@ public class Map {
 	private int height;
 	private int layers;
 	private int[][][] contents;
+	private NodeList layerList;
 	private Game game;
 	private Spritesheet spritesheet;
 	private Tile[][][] tiles;
@@ -67,7 +68,7 @@ public class Map {
 			DocumentBuilder docB = docBF.newDocumentBuilder();
 			Document doc = docB.parse(xmlDoc);
 
-			NodeList layerList = doc.getElementsByTagName("layer");
+			layerList = doc.getElementsByTagName("layer");
 			NodeList dataList = doc.getElementsByTagName("data");
 			NodeList objList = doc.getElementsByTagName("object");
 
@@ -148,12 +149,40 @@ public class Map {
 	// Draw Map
 	// ------------------------------------------------------------
 
-	public void drawMap(Graphics2D graphics) {
+	public void drawMapBot(Graphics2D graphics) {
 		for (int i = 0; i < layers; i++) {
+			((Element) layerList.item(i)).getAttribute("name");
 			for (int j = 0; j < height; j++) {
 				for (int k = 0; k < width; k++) {
-					if (contents[i][j][k] != 0) {
-						if (tiles[i][j][k] != null) {
+					if (((Element) layerList.item(i)).getAttribute("name").equals("background")) {
+						if (contents[i][j][k] != 0 && tiles[i][j][k] != null) {
+							Graphics2D graphics2 = (Graphics2D) graphics.create();
+							AffineTransform latch = graphics2.getTransform();
+							AffineTransform transform = new AffineTransform();
+
+							transform.translate(tiles[i][j][k].getPos().getX() / 2,
+												tiles[i][j][k].getPos().getY() / 2);
+
+							graphics2.transform(transform);
+							graphics2.drawImage(tiles[i][j][k].getImg(),
+												transform,
+												null);
+
+							graphics2.setTransform(latch);
+						}
+					}
+				}
+			}
+		}
+	}
+	
+	public void drawMapTop(Graphics2D graphics) {
+		for (int i = 0; i < layers; i++) {
+			((Element) layerList.item(i)).getAttribute("name");
+			for (int j = 0; j < height; j++) {
+				for (int k = 0; k < width; k++) {
+					if (((Element) layerList.item(i)).getAttribute("name").equals("foreground")) {
+						if (contents[i][j][k] != 0 && tiles[i][j][k] != null) {
 							Graphics2D graphics2 = (Graphics2D) graphics.create();
 							AffineTransform latch = graphics2.getTransform();
 							AffineTransform transform = new AffineTransform();

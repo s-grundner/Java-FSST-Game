@@ -12,7 +12,7 @@ import movement.PlayerController;
 import objs.GameObj;
 import objs.Hostile;
 import objs.Player;
-import objs.enumerators.EntityStats;
+import objs.enumerators.HostileType;
 import objs.enumerators.Maps;
 import objs.map.Map;
 
@@ -57,7 +57,7 @@ public class Game {
 		objs = new ArrayList<GameObj>();
 		add = new ArrayList<GameObj>();
 
-		objs.add(new Hostile(this, EntityStats.H_HOSTILE1));
+		objs.add(new Hostile(this, HostileType.HOSTILE1));
 		objs.add(new Player(this, new PlayerController(input)));
 	}
 
@@ -125,8 +125,12 @@ public class Game {
 		add.add(obj);
 	}
 
-	public void drawMap(Graphics2D graphics) {
-		this.map.drawMap(graphics);
+	public void drawMapTop(Graphics2D graphics) {
+		this.map.drawMapTop(graphics);
+	}
+	
+	public void drawMapBot(Graphics2D graphics) {
+		this.map.drawMapBot(graphics);
 	}
 
 	// ------------------------------------------------------------

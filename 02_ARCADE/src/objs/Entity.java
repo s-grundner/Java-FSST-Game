@@ -5,8 +5,8 @@ import java.util.Iterator;
 
 import main.Game;
 import math.Vector2;
-import objs.enumerators.EntityStats;
 import objs.enumerators.ProjectileType;
+import objs.properties.Position;
 
 /**
  * @author	Simon Grundner
@@ -16,21 +16,20 @@ import objs.enumerators.ProjectileType;
 public abstract class Entity extends GameObj {
 
 	protected ProjectileType projectileType;
-	protected EntityStats stats;
 	protected Projectile projectile;
 	protected ArrayList<Projectile> projectiles;
 	protected Vector2 shootingVector;
+	protected Position prevPos;
 	protected boolean isShooting;
 	protected double firingRate;
-	protected double nextBulletTime;
+	private double nextBulletTime;
 
 	public Entity(Game game) {
 		super(game);
 		this.projectiles = new ArrayList<Projectile>();
 		this.shootingVector = new Vector2(0, 0);
 		this.isShooting = false;
-
-		initStats();
+		prevPos = pos;
 	}
 
 	public void attack() {
@@ -41,10 +40,7 @@ public abstract class Entity extends GameObj {
 
 	public void removeProjectile(Projectile projectile) {
 		projectile.setAlive(false);
-		
 	}
-
-	public abstract void initStats();
 
 	@Override
 	public void update() {
@@ -52,7 +48,6 @@ public abstract class Entity extends GameObj {
 			attack();
 			nextBulletTime = System.currentTimeMillis() + getAttackSpeed();
 		}
-		
 		for (Iterator<Projectile> proji = projectiles.iterator(); proji.hasNext();) {
 			Projectile proj = proji.next();
 			if (!proj.isAlive()) {

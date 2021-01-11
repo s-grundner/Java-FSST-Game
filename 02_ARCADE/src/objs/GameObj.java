@@ -24,6 +24,7 @@ public abstract class GameObj {
 	protected boolean colliding;
 	protected boolean animate;
 	protected boolean alive;
+	protected boolean hit;
 	protected Game game;
 	protected Size size;
 	protected Position pos;
@@ -47,6 +48,7 @@ public abstract class GameObj {
 	// ------------------------------------------------------------
 
 	private void init() {
+		hit = true;
 		colliding = false;
 		animate = true;
 		alive = true;

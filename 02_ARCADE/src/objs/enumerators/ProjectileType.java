@@ -28,16 +28,16 @@ public enum ProjectileType {
 	private Hitbox hitbox;
 	private double rate;
 	private double speed;
-	private int power;
+	private int dmg;
 	private int mode;
 	private int stage;
 
-	private ProjectileType(String fileName, Hitbox hitbox, double rate, double speed, int power) {
+	private ProjectileType(String fileName, Hitbox hitbox, double rate, double speed, int dmg) {
 		this.fileName = fileName;
 		this.hitbox = hitbox;
 		this.rate = rate;
 		this.speed = speed;
-		this.power = power;
+		this.dmg = dmg;
 		mode = 0;
 		stage = 0;
 	}
@@ -62,9 +62,9 @@ public enum ProjectileType {
 
 	public void setSpeed(double speed) { this.speed = speed; }
 
-	public int getPower() { return power; }
+	public int getDmg() { return dmg; }
 
-	public void setPower(int power) { this.power = power; }
+	public void setDmg(int dmg) { this.dmg = dmg; }
 
 	public int getMode() { return mode; }
 

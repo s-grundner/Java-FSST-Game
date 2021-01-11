@@ -66,7 +66,7 @@ public class Gui extends JFrame {
 		graphics.scale(	Config.SCALE,
 						Config.SCALE);
 
-		game.drawMap(graphics);
+		game.drawMapBot(graphics);
 //		game.getMap().drawHitboxes(graphics);
 
 		for (GameObj obj : game.parseObjs()) {
@@ -74,6 +74,8 @@ public class Gui extends JFrame {
 			obj.drawOrigin(graphics);
 		}
 
+		game.drawMapTop(graphics);
+		
 		graphics.dispose();
 		bs.show();
 	}
