@@ -5,6 +5,7 @@ import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 
 import main.Game;
+import objs.enumerators.Objects;
 
 /**
  * @author	Simon Grundner <br>
@@ -17,6 +18,11 @@ public class Tile extends GameObj {
 		super(game);
 	}
 
+	@Override
+	public void assignType() {
+		object = Objects.TILE;
+	}
+	
 	// ------------------------------------------------------------
 	// update
 	// ------------------------------------------------------------

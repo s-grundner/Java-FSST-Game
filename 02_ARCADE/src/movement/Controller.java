@@ -21,5 +21,7 @@ public interface Controller {
 	boolean refresh();
 	boolean swMap();
 	boolean resetCollision();
+	boolean question();
+	boolean spawners();
 	Position getMousePos();
 }

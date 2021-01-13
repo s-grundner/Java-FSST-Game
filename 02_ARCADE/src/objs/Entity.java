@@ -22,6 +22,8 @@ public abstract class Entity extends GameObj {
 	protected Position prevPos;
 	protected boolean isShooting;
 	protected double firingRate;
+	protected double speed;
+	protected int hp;
 	private double nextBulletTime;
 
 	public Entity(Game game) {

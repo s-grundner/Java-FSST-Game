@@ -70,11 +70,7 @@ public class PlayerController implements Controller {
 		return input.isMousePressed(MouseEvent.BUTTON3);
 	}
 
-	@Override
-	public boolean refresh() {
-		return input.isPressed(KeyEvent.VK_F5);
-	}
-
+	
 	@Override
 	public boolean swMap() {
 		return input.isPressed(KeyEvent.VK_F1);
@@ -83,5 +79,20 @@ public class PlayerController implements Controller {
 	@Override
 	public boolean resetCollision() {
 		return input.isPressed(KeyEvent.VK_F2);
+	}
+	
+	@Override
+	public boolean question() {
+		return input.isPressed(KeyEvent.VK_F3);
+	}
+
+	@Override
+	public boolean spawners() {
+		return input.isPressed(KeyEvent.VK_F4);
+	}
+	
+	@Override
+	public boolean refresh() {
+		return input.isPressed(KeyEvent.VK_F5);
 	}
 }

@@ -2,11 +2,11 @@ package objs;
 
 import java.awt.Graphics2D;
 import java.awt.geom.AffineTransform;
-import java.awt.image.BufferedImage;
 
 import assets.Animation;
 import main.Game;
 import objs.enumerators.ItemType;
+import objs.enumerators.Objects;
 import objs.properties.Animated;
 
 /**
@@ -16,8 +16,16 @@ import objs.properties.Animated;
 
 public class Item extends GameObj implements Animated {
 
+	private ItemType itemType;
+
 	public Item(Game game, ItemType itemType) {
 		super(game);
+		this.itemType = itemType;
+	}
+
+	@Override
+	public void assignType() {
+		object = Objects.ITEM;
 	}
 
 	// ------------------------------------------------------------
@@ -37,12 +45,10 @@ public class Item extends GameObj implements Animated {
 	// ------------------------------------------------------------
 
 	@Override
-	public void anim(Animation anim) {
-	}
+	public void anim(Animation anim) {}
 
 	@Override
-	public void initAnim() {
-	}
+	public void initAnim() {}
 
 	// ------------------------------------------------------------
 	// Draw
@@ -57,6 +63,5 @@ public class Item extends GameObj implements Animated {
 	// Getters - Setters
 	// ------------------------------------------------------------
 
-	@Override
-	public BufferedImage getImg() { return null; }
+	public ItemType getItemType() { return itemType; }
 }

@@ -99,23 +99,24 @@ public class Vector2 {
 
 	public static Vector2 getRandom(Vector2 vector) {
 		Random rnd = new Random();
-		Vector2 ret = vector.getReverseVec();
-		double x = rnd.nextInt(100)-50;
-		double y = rnd.nextInt(100)-50;
+//		double x = rnd.nextInt(100)-50;
+//		double y = rnd.nextInt(100)-50;
+		double x = 0;
+		double y = 0;
 		
-//		if (vector.getX() < 0 && vector.getY() < 0) {
-//			x = rnd.nextInt(50)+1;
-//			y = rnd.nextInt(50)+1;
-//		} else if (vector.getX() < 0 && vector.getY() > 0) {
-//			x = rnd.nextInt(50)+1;
-//			y = -rnd.nextInt(50)+1;
-//		} else if (vector.getX() > 0 && vector.getY() < 0) {
-//			x = -rnd.nextInt(50)+1;
-//			y = rnd.nextInt(50)+1;
-//		} else if (vector.getX() > 0 && vector.getY() > 0) {
-//			x = -rnd.nextInt(50)+1;
-//			y = -rnd.nextInt(50)+1;
-//		}
+		if (vector.getX() < 0 && vector.getY() < 0) {
+			x = rnd.nextInt(50)+1;
+			y = rnd.nextInt(50)+1;
+		} else if (vector.getX() < 0 && vector.getY() > 0) {
+			x = rnd.nextInt(50)+1;
+			y = -rnd.nextInt(50)+1;
+		} else if (vector.getX() > 0 && vector.getY() < 0) {
+			x = -rnd.nextInt(50)+1;
+			y = rnd.nextInt(50)+1;
+		} else if (vector.getX() > 0 && vector.getY() > 0) {
+			x = -rnd.nextInt(50)+1;
+			y = -rnd.nextInt(50)+1;
+		}
 		return new Vector2(x, y);
 	}
 

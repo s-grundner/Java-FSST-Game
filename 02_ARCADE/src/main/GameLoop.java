@@ -3,7 +3,7 @@ package main;
 import config.Config;
 
 /**
- * @author	Simon Grundner <br>
+ * @author	Simon Grundner
  *			3AHEL
  */
 
@@ -11,7 +11,7 @@ public class GameLoop implements Runnable {
 
 	private Game game;
 
-	private boolean running;
+	public static boolean running;
 	private long nextStatTime;
 	private int ups, fps;
 	

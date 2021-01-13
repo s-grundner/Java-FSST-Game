@@ -3,9 +3,11 @@ package objs;
 import java.awt.Graphics2D;
 import java.awt.geom.AffineTransform;
 
+import config.Config;
 import main.Game;
 import math.Vector2;
 import objs.enumerators.HostileType;
+import objs.enumerators.Objects;
 import objs.enumerators.ProjectileType;
 import objs.properties.Position;
 
@@ -30,8 +32,15 @@ public class Hostile extends Entity {
 		setDefaultName("NA");
 		setImg(defaultName);
 		setProjectileType(ProjectileType.BULLET);
-		setPos(new Position(200, 200));
+		setPos(new Position(200, 100));
 		vector = new Vector2(Vector2.getRandom().getUnitVector());
+		speed = type.getSpeed();
+		hp = type.getHp();
+	}
+
+	@Override
+	public void assignType() {
+		object = Objects.HOSTILE;
 	}
 
 	// ------------------------------------------------------------
@@ -40,12 +49,22 @@ public class Hostile extends Entity {
 
 	@Override
 	public void update() {
-//		if (System.currentTimeMillis() > nextVectorTime) {
-//			vector = new Vector2(Vector2.getRandom().getUnitVector());
-//			nextVectorTime = System.currentTimeMillis() + type.getNextVectorTime();
-//		}
-		move(type.getSpeed());
+		if (System.currentTimeMillis() > nextVectorTime) {
+			vector = new Vector2(Vector2.getRandom().getUnitVector());
+			nextVectorTime = System.currentTimeMillis() + type.getNextVectorTime();
+		}
 		colliding();
+		move(type.getSpeed());
+
+		if (pos.getX() <= 2 * Config.TILESIZE || pos.getX() >= 2 * (game.getMap().getWidth() - 1) * Config.TILESIZE) {
+			vector = new Vector2(Vector2.getRandom(vector).getUnitVector());
+		} else if (pos.getY() <= 2 * Config.TILESIZE
+				|| pos.getY() >= 2 * (game.getMap().getHeight() - 1) * Config.TILESIZE) {
+			vector = new Vector2(Vector2.getRandom(vector).getUnitVector());
+		}
+		if (hp < 0) {
+			setAlive(false);
+		}
 	}
 
 	@Override
@@ -54,25 +73,15 @@ public class Hostile extends Entity {
 	@Override
 	public void colliding() {
 		if (colliding) {
-			pos = prevPos; 
-//			vector = vector.getReverseVec();
-//			vector = Vector2.getRandom(vector);
-			
-
 			if (getCurrentCollision() instanceof Projectile) {
 				Projectile hitMark = (Projectile) getCurrentCollision();
 				if (hit) {
 					hit = false;
-					type.setHp(type.getHp() - hitMark.getProjectile().getDmg());
-				}
-				if (type.getHp() < 0) {
-					setAlive(false);
+					hp -= hitMark.getProjectile().getDmg();
 				}
 			} else {
-				
-				
+				pos = prevPos;
 				vector = new Vector2(Vector2.getRandom(vector).getUnitVector());
-				
 			}
 		} else {
 			prevPos = pos;
@@ -94,11 +103,16 @@ public class Hostile extends Entity {
 								pos.getX() + size.getWidth() / 2,
 								pos.getY() + size.getHeight() / 2);
 		graphics.transform(transform);
-
 		transform.translate(pos.getX(),
 							pos.getY());
 		graphics.transform(transform);
 
 		return transform;
 	}
+
+	// ------------------------------------------------------------
+	// Getters - Setters
+	// ------------------------------------------------------------
+
+	public HostileType getType() { return type; }
 }

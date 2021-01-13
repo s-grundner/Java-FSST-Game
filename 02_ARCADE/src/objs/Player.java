@@ -3,16 +3,20 @@ package objs;
 import java.awt.Graphics2D;
 import java.awt.geom.AffineTransform;
 
+import javax.swing.JOptionPane;
+
 import assets.Animation;
 import config.Config;
 import main.Game;
 import math.Vector2;
+import misc.Question;
+import misc.SQuestionL;
 import movement.Controller;
-import objs.enumerators.PlayerStats;
 import objs.enumerators.Maps;
+import objs.enumerators.Objects;
+import objs.enumerators.PlayerStats;
 import objs.enumerators.ProjectileType;
 import objs.properties.Animated;
-import objs.properties.Position;
 
 /**
  * @author	Simon Grundner
@@ -23,18 +27,24 @@ public class Player extends Entity implements Animated {
 
 	private Controller controller;
 	private PlayerStats stats;
+	private SQuestionL sql;
 	private int animationIndex;
 	private int chargingIndex;
 	private int swIndex;
 	private double nextImg = 0.0;
 	private boolean charging;
-	private boolean swMap;
+	private boolean[] sw;
 
 	public Player(Game game, Controller controller) {
 		super(game);
 		this.controller = controller;
-		
+
 		init();
+	}
+
+	@Override
+	public void assignType() {
+		object = Objects.PLAYER;
 	}
 
 	private void init() {
@@ -47,7 +57,11 @@ public class Player extends Entity implements Animated {
 		chargingIndex = 0;
 		swIndex = 1;
 		charging = false;
-		swMap = true;
+		sql = new SQuestionL();
+		sw = new boolean[3];
+		for (int i = 0; i < sw.length; i++) {
+			sw[i] = true;
+		}
 	}
 
 	// ------------------------------------------------------------
@@ -64,9 +78,7 @@ public class Player extends Entity implements Animated {
 		Keys();
 		colliding();
 		initAnim();
-		move(	stats.getSpeedX(),
-				stats.getSpeedY(),
-				stats.getSpeed());
+		move(stats.getSpeed());
 	}
 
 	public void Keys() {
@@ -121,14 +133,30 @@ public class Player extends Entity implements Animated {
 			if (swIndex >= Maps.values().length) {
 				swIndex = 0;
 			}
-			if (swMap) {
+			if (sw[0]) {
 				game.initMap(Maps.values()[swIndex]);
 				setDefaultPos();
 				swIndex++;
 			}
-			swMap = false;
+			sw[0] = false;
 		} else {
-			swMap = true;
+			sw[0] = true;
+		}
+		if (controller.question()) {
+			if (sw[1]) {
+				askQuestion();
+			}
+			sw[1] = false;
+		} else {
+			sw[1] = true;
+		}
+		if (controller.spawners()) {
+			if (sw[2]) {
+				game.runSpawners();
+			}
+			sw[2] = false;
+		} else {
+			sw[2] = true;
 		}
 	}
 
@@ -141,11 +169,25 @@ public class Player extends Entity implements Animated {
 		}
 	}
 
+	public void askQuestion() {
+		Question q = sql.getRandomQ();
+		String answer = JOptionPane.showInputDialog(null,
+													q.getQ(),
+													"Question",
+													3);
+		if (q.isCorrect(answer)) {
+			System.out.println("uwu");
+		} else {
+			System.out.println("òwó");
+		}
+	}
+
 	// ------------------------------------------------------------
 	// Animate
 	// ------------------------------------------------------------
 
 	@Override
+
 	public void initAnim() {
 		if (Animation.P_EVADE.getActive()) {
 			isShooting = false;
@@ -230,19 +272,19 @@ public class Player extends Entity implements Animated {
 		transform = AffineTransform.getTranslateInstance(	pos.getX() + size.getWidth() / 2,
 															pos.getY() + size.getHeight() / 2);
 
-		if (controller.shoot() || controller.charge() || charging) {
+//		if (controller.shoot() || controller.charge() || charging) {
 			transform.setToRotation(getMouseVector().getX(),
 									getMouseVector().getY(),
 									pos.getX() + size.getWidth() / 2,
 									pos.getY() + size.getHeight() / 2);
 			graphics.transform(transform);
-		} else {
-			transform.setToRotation(pointingVector.getX(),
-									pointingVector.getY(),
-									pos.getX() + size.getWidth() / 2,
-									pos.getY() + size.getHeight() / 2);
-			graphics.transform(transform);
-		}
+//		} else {
+//			transform.setToRotation(pointingVector.getX(),
+//									pointingVector.getY(),
+//									pos.getX() + size.getWidth() / 2,
+//									pos.getY() + size.getHeight() / 2);
+//			graphics.transform(transform);
+//		}
 		transform.translate(pos.getX(),
 							pos.getY());
 		graphics.transform(transform);
@@ -261,4 +303,6 @@ public class Player extends Entity implements Animated {
 												- (pos.getY() + (Config.TILESIZE / 2)) * Config.SCALE);
 		return vector;
 	}
+
+	public Controller getController() { return controller; }
 }

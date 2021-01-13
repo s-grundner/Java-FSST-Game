@@ -14,7 +14,7 @@ import objs.GameObj;
 import objs.properties.Spritesheet;
 
 /**
- * @author	Simon Grundner <br>
+ * @author	Simon Grundner
  *			3AHEL
  */
 
@@ -43,7 +43,7 @@ public class Gui extends JFrame {
 
 		setLocationRelativeTo(null);
 		setVisible(true);
-
+		
 		canvas.createBufferStrategy(2);
 		bs = canvas.getBufferStrategy();
 

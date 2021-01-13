@@ -4,11 +4,13 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
+import java.util.Random;
 
 import assets.Animation;
 import config.Config;
 import main.Game;
 import math.Vector2;
+import objs.enumerators.Objects;
 import objs.properties.Hitbox;
 import objs.properties.Position;
 import objs.properties.Size;
@@ -37,10 +39,12 @@ public abstract class GameObj {
 	protected Animation animation;
 	protected Hitbox currentCollisionHitbox;
 	protected GameObj currentCollision;
+	protected Objects object;
 
 	public GameObj(Game game) {
 		this.game = game;
 		init();
+		assignType();
 	}
 
 	// ------------------------------------------------------------
@@ -83,10 +87,28 @@ public abstract class GameObj {
 		graphics2.dispose();
 	}
 
+	public void randomize() {
+		int i = 0;
+		Random rnd = new Random();
+		pos = new Position(	rnd.nextInt(game.getMap().getWidth() * Config.TILESIZE),
+							rnd.nextInt(game.getMap().getHeight() * Config.TILESIZE));
+		do {
+			i++;
+			if(i > 1000) {
+				setAlive(false);
+				break;
+			}
+			pos = new Position(	rnd.nextInt(game.getMap().getWidth() * Config.TILESIZE),
+								rnd.nextInt(game.getMap().getHeight() * Config.TILESIZE));
+		} while (game.getCollision().checkCollision(pos,
+													size));
+	}
+
 	// ------------------------------------------------------------
 	// Abstract Methods
 	// ------------------------------------------------------------
 
+	public abstract void assignType();
 	public abstract void colliding();
 	public abstract void update();
 	public abstract AffineTransform transform(Graphics2D graphics);
@@ -139,6 +161,8 @@ public abstract class GameObj {
 	public Hitbox getCurrentCollisionHitbox() { return currentCollisionHitbox; }
 
 	public GameObj getCurrentCollision() { return currentCollision; }
+
+	public Objects getObject() { return object; }
 
 	// ------------------------------------------------------------
 	// Debug

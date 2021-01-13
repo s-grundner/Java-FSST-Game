@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import main.Game;
 import objs.GameObj;
 import objs.properties.Hitbox;
+import objs.properties.Position;
+import objs.properties.Size;
 
 /**
  * @author	Simon Grundner
@@ -54,14 +56,35 @@ public class Collision {
 							&& colObj2.getPos().getX() + colObj2.getSize().getWidth() > colObj.getPos().getX()
 							&& colObj2.getPos().getY() < colObj.getPos().getY() + colObj.getSize().getHeight()
 							&& colObj2.getPos().getY() + colObj2.getSize().getHeight() > colObj.getPos().getY()) {
-//						colObj2.setColliding(true);
+						colObj2.setColliding(true);
 						colObj.setColliding(true);
 
 						colObj.setCurrentCollision(colObj2);
-//						colObj2.setCurrentCollision(colObj);
+						colObj2.setCurrentCollision(colObj);
 					}
 				}
 			}
 		}
+	}
+
+	public boolean checkCollision(Position pos, Size size) {
+		boolean ret = false;
+		for (GameObj colObj : objs) {
+			if (pos.getX() < colObj.getPos().getX() + colObj.getSize().getWidth()
+					&& pos.getX() + size.getWidth() > colObj.getPos().getX()
+					&& pos.getY() < colObj.getPos().getY() + colObj.getSize().getHeight()
+					&& pos.getY() + size.getHeight() > colObj.getPos().getY()) {
+				ret = true;
+			}
+		}
+		for (Hitbox colHB : mapHitbox) {
+			if (pos.getX() < colHB.getPos().getX() + colHB.getSize().getWidth()
+					&& pos.getX() + size.getWidth() > colHB.getPos().getX()
+					&& pos.getY() < colHB.getPos().getY() + colHB.getSize().getHeight()
+					&& pos.getY() + size.getHeight() > colHB.getPos().getY()) {
+				ret = true;
+			}
+		}
+		return ret;
 	}
 }

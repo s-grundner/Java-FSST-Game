@@ -5,7 +5,9 @@ import java.awt.geom.AffineTransform;
 
 import config.Config;
 import main.Game;
+import objs.enumerators.Objects;
 import objs.enumerators.ProjectileType;
+import objs.properties.Position;
 
 /**
  * @author	Simon Grundner
@@ -22,14 +24,19 @@ public class Projectile extends GameObj {
 		this.host = host;
 		this.projectile = projectile;
 		this.vector = host.getShootingVector();
-		this.pos.setPos(host.getPos().getX() + Config.TILESIZE * Math.cos(vector.getAngleToXAxis()),
-						host.getPos().getY() - Config.TILESIZE * Math.sin(vector.getAngleToXAxis()));
+		this.pos = new Position(host.getPos().getX() + Config.TILESIZE * Math.cos(vector.getAngleToXAxis()),
+								host.getPos().getY() - Config.TILESIZE * Math.sin(vector.getAngleToXAxis()));
 
 		setImg(projectile.getFileName());
 		img = spritesheet.getImage(	projectile.getStage(),
 									projectile.getMode());
 	}
 
+	@Override
+	public void assignType() {
+		object = Objects.PROJECTILE;
+	}
+	
 	// ------------------------------------------------------------
 	// update
 	// ------------------------------------------------------------
@@ -46,16 +53,6 @@ public class Projectile extends GameObj {
 
 	@Override
 	public void colliding() {
-//		if (colliding) {
-//			if (!host.equals(currentCollision)) {
-//				for (Projectile proj : host.getProjectiles()) {
-//					if (!proj.equals(getCurrentCollision())) {
-//						host.removeProjectile(this);
-//						break;
-//					}
-//				}
-//			}
-//		}
 		if (colliding) {
 			if (!host.equals(currentCollision)) {
 				boolean x = false;
@@ -101,6 +98,6 @@ public class Projectile extends GameObj {
 	public Entity getHost() { return host; }
 
 	public void setHost(Entity host) { this.host = host; }
-	
+
 	public ProjectileType getProjectile() { return projectile; }
 }

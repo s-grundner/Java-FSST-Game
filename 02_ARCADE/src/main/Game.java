@@ -7,6 +7,7 @@ import java.util.Iterator;
 import assets.Audio;
 import config.Config;
 import math.Collision;
+import math.Spawner;
 import movement.Input;
 import movement.PlayerController;
 import objs.GameObj;
@@ -32,6 +33,7 @@ public class Game {
 	private Map map;
 	private ArrayList<GameObj> objs;
 	private ArrayList<GameObj> add;
+	private ArrayList<Spawner> spawns;
 	private Input input;
 	private Collision collision;
 
@@ -41,12 +43,12 @@ public class Game {
 
 		input = new Input();
 		gui = new Gui(Config.CANVAS_WIDTH, Config.CANVAS_HEIGHT, input);
+		collision = new Collision(this);
 
 		initMap(Maps.MAP1);
 		initObjs();
 		initAudio();
-
-		collision = new Collision(this);
+		initSpawns();
 	}
 
 	// ------------------------------------------------------------
@@ -57,7 +59,6 @@ public class Game {
 		objs = new ArrayList<GameObj>();
 		add = new ArrayList<GameObj>();
 
-		objs.add(new Hostile(this, HostileType.HOSTILE1));
 		objs.add(new Player(this, new PlayerController(input)));
 	}
 
@@ -72,6 +73,11 @@ public class Game {
 		this.map.loadMap(maps);
 	}
 
+	private void initSpawns() {
+		spawns = new ArrayList<>();
+//		spawns.add(new Spawner(this, new Player(this, new PlayerController(input)), 10000));
+		spawns.add(new Spawner(this, new Hostile(this, HostileType.HOSTILE1), 1000));
+	}
 	// ------------------------------------------------------------
 	// update - render
 	// ------------------------------------------------------------
@@ -107,6 +113,8 @@ public class Game {
 				playAudio = true;
 			}
 		}
+		spawns.forEach(spwn -> spwn.update());
+		System.out.println(objs.size());
 	}
 
 	public void render() {
@@ -128,10 +136,12 @@ public class Game {
 	public void drawMapTop(Graphics2D graphics) {
 		this.map.drawMapTop(graphics);
 	}
-	
+
 	public void drawMapBot(Graphics2D graphics) {
 		this.map.drawMapBot(graphics);
 	}
+
+	public Collision getCollision() { return collision; }
 
 	// ------------------------------------------------------------
 	// Getters - Setters
@@ -151,5 +161,9 @@ public class Game {
 		for (GameObj obj : objs) {
 			System.out.println(obj.getPos());
 		}
+	}
+	
+	public void runSpawners() {
+		spawns.forEach(spwn -> spwn.setRunning(!spwn.isRunning()));
 	}
 }
