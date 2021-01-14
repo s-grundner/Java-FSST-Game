@@ -86,6 +86,8 @@ public abstract class GameObj {
 		graphics.setTransform(latch);
 		graphics2.dispose();
 	}
+	
+	public abstract void drawStats(Graphics2D graphics);
 
 	public void randomize() {
 		int i = 0;

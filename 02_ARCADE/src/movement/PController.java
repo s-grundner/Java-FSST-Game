@@ -3,11 +3,11 @@ package movement;
 import objs.properties.Position;
 
 /**
- * @author	Simon Grundner <br>
+ * @author	Simon Grundner
  *			3AHEL
  */
 
-public interface Controller {
+public interface PController {
 
 	boolean reqUp();
 	boolean reqDown();

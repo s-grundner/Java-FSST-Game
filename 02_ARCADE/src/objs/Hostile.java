@@ -19,6 +19,7 @@ import objs.properties.Position;
 public class Hostile extends Entity {
 
 	private HostileType type;
+	private Player target;
 	private long nextVectorTime;
 
 	public Hostile(Game game, HostileType type) {
@@ -29,13 +30,15 @@ public class Hostile extends Entity {
 	}
 
 	private void init() {
-		setDefaultName("NA");
+		setDefaultName("GAME_Enemy");
 		setImg(defaultName);
-		setProjectileType(ProjectileType.BULLET);
+		setProjectileType(ProjectileType.INTELLIJ);
 		setPos(new Position(200, 100));
 		vector = new Vector2(Vector2.getRandom().getUnitVector());
 		speed = type.getSpeed();
 		hp = type.getHp();
+		isShooting = true;
+		target = searchPlayer();
 	}
 
 	@Override
@@ -49,26 +52,28 @@ public class Hostile extends Entity {
 
 	@Override
 	public void update() {
+		super.update();
+		shootingVector = new Vector2(pos, target.getPos());
+		colliding();
 		if (System.currentTimeMillis() > nextVectorTime) {
 			vector = new Vector2(Vector2.getRandom().getUnitVector());
 			nextVectorTime = System.currentTimeMillis() + type.getNextVectorTime();
 		}
-		colliding();
+		if (pos.getX() >= (game.getMap().getWidth() - 1) * Config.TILESIZE) {
+			pos.setX((game.getMap().getWidth() - 2) * Config.TILESIZE);
+			vector = new Vector2(Vector2.getRandom(vector).getUnitVector());
+		} else if (pos.getY() >= (game.getMap().getHeight() - 1) * Config.TILESIZE) {
+			pos.setY((game.getMap().getHeight() - 2) * Config.TILESIZE);
+			vector = new Vector2(Vector2.getRandom(vector).getUnitVector());
+		} else if (pos.getX() <= Config.TILESIZE) {
+			pos.setX(2 * Config.TILESIZE);
+			vector = new Vector2(Vector2.getRandom(vector).getUnitVector());
+		} else if (pos.getY() <= Config.TILESIZE) {
+			pos.setY(2 * Config.TILESIZE);
+			vector = new Vector2(Vector2.getRandom(vector).getUnitVector());
+		}
 		move(type.getSpeed());
-
-		if (pos.getX() <= 2 * Config.TILESIZE || pos.getX() >= 2 * (game.getMap().getWidth() - 1) * Config.TILESIZE) {
-			vector = new Vector2(Vector2.getRandom(vector).getUnitVector());
-		} else if (pos.getY() <= 2 * Config.TILESIZE
-				|| pos.getY() >= 2 * (game.getMap().getHeight() - 1) * Config.TILESIZE) {
-			vector = new Vector2(Vector2.getRandom(vector).getUnitVector());
-		}
-		if (hp < 0) {
-			setAlive(false);
-		}
 	}
-
-	@Override
-	public void attack() {}
 
 	@Override
 	public void colliding() {
@@ -78,15 +83,29 @@ public class Hostile extends Entity {
 				if (hit) {
 					hit = false;
 					hp -= hitMark.getProjectile().getDmg();
+					if (hp < 0) {
+						setAlive(false);
+						hitMark.getHost().incScore();
+						hitMark.getHost().removeProjectile(hitMark);
+						;
+					}
 				}
 			} else {
 				pos = prevPos;
 				vector = new Vector2(Vector2.getRandom(vector).getUnitVector());
 			}
 		} else {
+			currentCollision = null;
 			prevPos = pos;
 			hit = true;
 		}
+	}
+
+	private Player searchPlayer() {
+		for (GameObj obj : game.parseObjs()) {
+			if (obj instanceof Player) { return (Player) obj; }
+		}
+		return null;
 	}
 
 	// ------------------------------------------------------------
@@ -95,20 +114,16 @@ public class Hostile extends Entity {
 
 	@Override
 	public AffineTransform transform(Graphics2D graphics) {
-		AffineTransform transform;
-		transform = AffineTransform.getTranslateInstance(	pos.getX() + size.getWidth() / 2,
-															pos.getY() + size.getHeight() / 2);
-		transform.setToRotation(vector.getX(),
-								vector.getY(),
-								pos.getX() + size.getWidth() / 2,
-								pos.getY() + size.getHeight() / 2);
-		graphics.transform(transform);
+		AffineTransform transform = new AffineTransform();
 		transform.translate(pos.getX(),
 							pos.getY());
 		graphics.transform(transform);
 
 		return transform;
 	}
+
+	@Override
+	public void drawStats(Graphics2D graphics) {}
 
 	// ------------------------------------------------------------
 	// Getters - Setters

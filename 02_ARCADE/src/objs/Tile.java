@@ -39,12 +39,12 @@ public class Tile extends GameObj {
 	// ------------------------------------------------------------
 
 	@Override
-	public void draw(Graphics2D graphics) {}
-
-	@Override
 	public AffineTransform transform(Graphics2D graphics) {
 		return null;
 	}
+	
+	@Override
+	public void drawStats(Graphics2D graphics) {}
 
 	// ------------------------------------------------------------
 	// Getters - Setters

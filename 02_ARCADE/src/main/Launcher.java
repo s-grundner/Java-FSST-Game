@@ -5,6 +5,10 @@ package main;
  *			3AHEL
  */
 
+/**
+ * @author Simon Grundner
+ *		   3AHEL
+ */
 public class Launcher {
 
 	public static void main(String[] args) {

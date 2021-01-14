@@ -58,6 +58,9 @@ public class Item extends GameObj implements Animated {
 	public AffineTransform transform(Graphics2D graphics) {
 		return null;
 	}
+	
+	@Override
+	public void drawStats(Graphics2D graphics) {}
 
 	// ------------------------------------------------------------
 	// Getters - Setters

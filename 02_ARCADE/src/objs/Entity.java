@@ -24,7 +24,9 @@ public abstract class Entity extends GameObj {
 	protected double firingRate;
 	protected double speed;
 	protected int hp;
+	protected int score;
 	private double nextBulletTime;
+	
 
 	public Entity(Game game) {
 		super(game);
@@ -44,9 +46,13 @@ public abstract class Entity extends GameObj {
 		projectile.setAlive(false);
 	}
 
+	public void incScore() {
+		score++;
+	}
+
 	@Override
 	public void update() {
-		if ((System.currentTimeMillis() > nextBulletTime) && getShootingState()) {
+		if ((System.currentTimeMillis() > nextBulletTime) && isShooting) {
 			attack();
 			nextBulletTime = System.currentTimeMillis() + getAttackSpeed();
 		}
@@ -79,4 +85,15 @@ public abstract class Entity extends GameObj {
 	public double getAttackSpeed() { return projectileType.getRate(); }
 
 	public ArrayList<Projectile> getProjectiles() { return projectiles; }
+	
+	// ------------------------------------------------------------
+	// Debug
+	// ------------------------------------------------------------
+	
+	public void displayProjectile() {
+		projectiles.forEach(System.out::println);
+	}
+	
 }
+
+

@@ -10,7 +10,6 @@ import javax.swing.JFrame;
 
 import config.Config;
 import movement.Input;
-import objs.GameObj;
 import objs.properties.Spritesheet;
 
 /**
@@ -43,7 +42,7 @@ public class Gui extends JFrame {
 
 		setLocationRelativeTo(null);
 		setVisible(true);
-		
+
 		canvas.createBufferStrategy(2);
 		bs = canvas.getBufferStrategy();
 
@@ -59,23 +58,27 @@ public class Gui extends JFrame {
 		graphics.drawImage(	bg.getSheet(),
 							0,
 							0,
-							bg.getSheet().getWidth(),
-							bg.getSheet().getHeight(),
+							canvas.getWidth(),
+							canvas.getHeight(),
 							null);
-
 		graphics.scale(	Config.SCALE,
 						Config.SCALE);
+		switch (game.getGameState()) {
+			case END:
+			break;
+			case GAME:
+				game.drawMapBot(graphics);
+				game.parseObjs().forEach(obj -> obj.draw(graphics));
+				game.drawMapTop(graphics);
+				game.parseObjs().forEach(obj -> obj.drawStats(graphics));
 
-		game.drawMapBot(graphics);
-//		game.getMap().drawHitboxes(graphics);
-
-		for (GameObj obj : game.parseObjs()) {
-			obj.draw(graphics);
-			obj.drawOrigin(graphics);
+			break;
+			case MENU:
+				game.getMenu().draw(graphics);
+			break;
+			default:
+			break;
 		}
-
-		game.drawMapTop(graphics);
-		
 		graphics.dispose();
 		bs.show();
 	}

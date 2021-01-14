@@ -36,7 +36,7 @@ public class Projectile extends GameObj {
 	public void assignType() {
 		object = Objects.PROJECTILE;
 	}
-	
+
 	// ------------------------------------------------------------
 	// update
 	// ------------------------------------------------------------
@@ -57,7 +57,7 @@ public class Projectile extends GameObj {
 			if (!host.equals(currentCollision)) {
 				boolean x = false;
 				for (Projectile proj : host.getProjectiles()) {
-					if (proj.equals(getCurrentCollision())) {
+					if (proj.equals(currentCollision)) {
 						x = true;
 						break;
 					}
@@ -66,6 +66,8 @@ public class Projectile extends GameObj {
 					host.removeProjectile(this);
 				}
 			}
+		} else {
+			currentCollision = null;
 		}
 	}
 
@@ -91,6 +93,9 @@ public class Projectile extends GameObj {
 		return transform;
 	}
 
+	@Override
+	public void drawStats(Graphics2D graphics) {}
+
 	// ------------------------------------------------------------
 	// Getters - Setters
 	// ------------------------------------------------------------
@@ -100,4 +105,13 @@ public class Projectile extends GameObj {
 	public void setHost(Entity host) { this.host = host; }
 
 	public ProjectileType getProjectile() { return projectile; }
+
+	// ------------------------------------------------------------
+	// Debug
+	// ------------------------------------------------------------
+
+	@Override
+	public String toString() {
+		return String.valueOf(projectile.getDmg());
+	}
 }

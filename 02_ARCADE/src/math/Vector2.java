@@ -2,6 +2,8 @@ package math;
 
 import java.util.Random;
 
+import objs.properties.Position;
+
 /**
  * @author	Simon Grundner
  *			3AHEL
@@ -20,6 +22,11 @@ public class Vector2 {
 	public Vector2(Vector2 vector) {
 		this.x = vector.getX();
 		this.y = vector.getY();
+	}
+	
+	public Vector2(Position pos1, Position pos2) {
+		this.x = pos2.getX() - pos1.getX();
+		this.y = pos2.getY() - pos1.getY();
 	}
 	
 	// ------------------------------------------------------------

@@ -8,11 +8,14 @@ import assets.Audio;
 import config.Config;
 import math.Collision;
 import math.Spawner;
+import misc.menu.Menu;
+import misc.menu.MenuController;
 import movement.Input;
 import movement.PlayerController;
 import objs.GameObj;
 import objs.Hostile;
 import objs.Player;
+import objs.enumerators.GameState;
 import objs.enumerators.HostileType;
 import objs.enumerators.Maps;
 import objs.map.Map;
@@ -36,13 +39,17 @@ public class Game {
 	private ArrayList<Spawner> spawns;
 	private Input input;
 	private Collision collision;
+	private GameState gameState;
+	private Menu menu;
 
 	public Game() {
 		config = new Config();
 		config.init();
+		gameState = GameState.GAME;
 
 		input = new Input();
 		gui = new Gui(Config.CANVAS_WIDTH, Config.CANVAS_HEIGHT, input);
+		menu = new Menu(this, new PlayerController(input));
 		collision = new Collision(this);
 
 		initMap(Maps.MAP1);
@@ -62,7 +69,7 @@ public class Game {
 		objs.add(new Player(this, new PlayerController(input)));
 	}
 
-	private void initAudio() {
+	public void initAudio() {
 		playAudio = true;
 		loopAudio = false;
 		audio = new Audio("GAME-Intro.wav");
@@ -75,46 +82,69 @@ public class Game {
 
 	private void initSpawns() {
 		spawns = new ArrayList<>();
-//		spawns.add(new Spawner(this, new Player(this, new PlayerController(input)), 10000));
-		spawns.add(new Spawner(this, new Hostile(this, HostileType.HOSTILE1), 1000));
+		spawns.add(new Spawner(this, new Hostile(this, HostileType.HOSTILE1), 1500));
 	}
 	// ------------------------------------------------------------
 	// update - render
 	// ------------------------------------------------------------
 
 	public void update() {
-		collision.update();
-		objs.addAll(add);
-		add.clear();
-		objs.forEach(obj -> obj.update());
+		switch (gameState) {
+			case MENU:
 
-		for (Iterator<GameObj> obji = objs.iterator(); obji.hasNext();) {
-			GameObj obj = obji.next();
-			if (!obj.isAlive()) {
-				obji.remove();
-			}
-		}
-		// ------------------------------------------------------------
-		// Audio
-		// ------------------------------------------------------------
+				config.refresh(gui);
+				// ------------------------------------------------------------
+				// Audio
+				// ------------------------------------------------------------
 
-		if (Config.AUDIO) {
-			if (!loopAudio && playAudio) {
-				playAudio = false;
-				loopTime = System.currentTimeMillis() * 1000 + audio.getClip().getMicrosecondLength();
-				audio.play();
-			} else if (loopAudio && playAudio) {
-				playAudio = false;
-				audio.select("GAME-Loop.wav");
-				audio.loop();
-			}
-			if (!loopAudio && (System.currentTimeMillis() * 1000 > loopTime)) {
-				loopAudio = true;
-				playAudio = true;
-			}
+//				if (Config.AUDIO) {
+//					if (playAudio) {
+//						playAudio = false;
+//						audio.select("GAME-Menu.wav");
+//						audio.loop();
+//					}
+//				}
+			break;
+			case END:
+				audio.stop();
+			break;
+			case GAME:
+				collision.update();
+				objs.addAll(add);
+				add.clear();
+				objs.forEach(obj -> obj.update());
+				if (objs.size() < 250) {
+					spawns.forEach(spwn -> spwn.update());
+				}
+
+				for (Iterator<GameObj> obji = objs.iterator(); obji.hasNext();) {
+					GameObj obj = obji.next();
+					if (!obj.isAlive()) {
+						obji.remove();
+					}
+				}
+
+				// ------------------------------------------------------------
+				// Audio
+				// ------------------------------------------------------------
+
+				if (Config.AUDIO) {
+					if (!loopAudio && playAudio) {
+						playAudio = false;
+						loopTime = System.currentTimeMillis() * 1000 + audio.getClip().getMicrosecondLength();
+						audio.play();
+					} else if (loopAudio && playAudio) {
+						playAudio = false;
+						audio.select("GAME-Loop.wav");
+						audio.loop();
+					}
+					if (!loopAudio && (System.currentTimeMillis() * 1000 > loopTime)) {
+						loopAudio = true;
+						playAudio = true;
+					}
+				}
+			break;
 		}
-		spawns.forEach(spwn -> spwn.update());
-		System.out.println(objs.size());
 	}
 
 	public void render() {
@@ -153,6 +183,12 @@ public class Game {
 
 	public Map getMap() { return map; }
 
+	public GameState getGameState() { return gameState; }
+
+	public void setGameState(GameState gameState) { this.gameState = gameState; }
+
+	public Menu getMenu() { return menu; }
+
 	// ------------------------------------------------------------
 	// Debug
 	// ------------------------------------------------------------
@@ -162,7 +198,7 @@ public class Game {
 			System.out.println(obj.getPos());
 		}
 	}
-	
+
 	public void runSpawners() {
 		spawns.forEach(spwn -> spwn.setRunning(!spwn.isRunning()));
 	}

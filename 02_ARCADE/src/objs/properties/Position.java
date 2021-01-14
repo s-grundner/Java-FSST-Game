@@ -1,7 +1,7 @@
 package objs.properties;
 
 /**
- * @author	Simon Grundner <br>
+ * @author	Simon Grundner
  *			3AHEL
  */
 
@@ -13,6 +13,10 @@ public class Position {
 	public Position(double x, double y) {
 		this.x = x;
 		this.y = y;
+	}
+	public Position(Position pos) {
+		this.x = pos.getX();
+		this.y = pos.getY();
 	}
 
 	// ------------------------------------------------------------

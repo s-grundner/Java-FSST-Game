@@ -16,15 +16,14 @@ public class Question {
 		this.id = id;
 		this.punkte = punkte;
 		this.q = q;
-		this.a = a;
+		this.a = a.toLowerCase();
 	}
 
 	public boolean isCorrect(String a) {
-		if (this.a.equals(a)) {
-			return true;
-		} else {
-			return false;
+		if (a != null) {
+			if (this.a.equals(a.toLowerCase())) { return true; }
 		}
+		return false;
 	}
 
 	public int getId() { return id; }

@@ -28,8 +28,6 @@ public class Config {
 	public static double SCALE;
 	public static double REFRESH_RATE;
 	public static int TILESIZE;
-	public static int P_EVADE_DELAY;
-	public static int P_CHARGE_DELAY;
 	
 	public void init() {
 		try {
@@ -79,15 +77,6 @@ public class Config {
 		case TILESIZE:
 			TILESIZE = Integer.parseInt(operation);
 			break;
-
-		case P_EVADE_DELAY:
-			P_EVADE_DELAY = Integer.parseInt(operation);
-			break;
-			
-		case P_CHARGE_DELAY:
-			P_CHARGE_DELAY = Integer.parseInt(operation);
-			break;
-
 		}
 	}
 	

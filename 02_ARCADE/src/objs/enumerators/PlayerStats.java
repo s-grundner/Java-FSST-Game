@@ -1,7 +1,7 @@
 package objs.enumerators;
 
 /**
- * @author	Simon Grundner <br>
+ * @author	Simon Grundner
  *			3AHEL
  */
 
@@ -11,7 +11,7 @@ public enum PlayerStats {
 	// Enumerators (Entities)
 	// ------------------------------------------------------------
 
-	P_DEFAULT(2, 3), P_EVADE(10, 3);
+	P_DEFAULT(2, 20), P_EVADE(10, 3);
 
 	// ------------------------------------------------------------
 	// Members - Constructor

@@ -5,7 +5,7 @@ import objs.properties.Size;
 
 
 /**
- * @author	Simon Grundner <br>
+ * @author	Simon Grundner
  *			3AHEL
  */
 
@@ -28,7 +28,6 @@ public class GameScaler {
 
 		Config.SCALE = Math.min(scaleX,
 								scaleY);
-		compareXY();
 	}
 
 	public void compareXY() {

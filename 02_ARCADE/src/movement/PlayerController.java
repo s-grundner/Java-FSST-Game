@@ -10,7 +10,7 @@ import objs.properties.Position;
  *			3AHEL
  */
 
-public class PlayerController implements Controller {
+public class PlayerController implements PController {
 
 	private Input input;
 
