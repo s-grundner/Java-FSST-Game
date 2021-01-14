@@ -2,12 +2,11 @@ package misc.menu;
 
 import java.awt.Graphics2D;
 import java.awt.geom.AffineTransform;
-import java.util.ArrayList;
 
 import config.Config;
 import main.Game;
 import math.GameScaler;
-import movement.PController;
+import objs.enumerators.GameState;
 import objs.properties.Size;
 import objs.properties.Spritesheet;
 
@@ -18,36 +17,46 @@ import objs.properties.Spritesheet;
 
 public class Menu {
 
-	private PController controller;
+	private MController controller;
 	private Spritesheet logo;
-	private ArrayList<Button> buttons;
+	private Spritesheet start;
 	private GameScaler menuScaler;
 	private Game game;
 
-	public Menu(Game game, PController controller) {
-		this.controller = controller;
+	public Menu(Game game, MenuController menuController) {
+		this.game = game;
+		this.controller = menuController;
 		logo = new Spritesheet("MENU_Logo");
+		start = new Spritesheet("format-START");
 		menuScaler = new GameScaler(new Size(	Config.CANVAS_WIDTH / (Config.TILESIZE * 4),
 												Config.CANVAS_HEIGHT / (Config.TILESIZE * 4)));
 	}
 
 	public void update() {
-		if(controller.evade()) {
-			System.out.println(1);
-//			game.setGameState(GameState.GAME);
-//			game.initAudio();
+		if (controller.getSpace()) {
+			game.getAudio().stop();
+			game.setGameState(GameState.GAME);
+		}
+		if (controller.exit()) {
+			System.exit(0);
 		}
 	}
 
 	public void draw(Graphics2D graphics) {
+		menuScaler.rescale();
 		Graphics2D graphics2 = (Graphics2D) graphics.create();
 		AffineTransform latch = graphics2.getTransform();
-		menuScaler.rescale();
 		graphics2.drawImage(logo.getSheet(),
 							(int) (Config.CANVAS_WIDTH / (2 * Config.SCALE)
 									- (Config.TILESIZE * logo.getImgHorizontalCount() / 2)),
 							(int) (Config.CANVAS_HEIGHT / (2 * Config.SCALE)
 									- (Config.TILESIZE * logo.getImgVerticalCount() / 2)),
+							null);
+		graphics2.drawImage(start.getSheet(),
+							(int) (Config.CANVAS_WIDTH / (2 * Config.SCALE)
+									- (Config.TILESIZE * start.getImgHorizontalCount() / 2)),
+							(int) (56 + (Config.CANVAS_HEIGHT / (2 * Config.SCALE)
+									- (Config.TILESIZE * start.getImgVerticalCount() / 2))),
 							null);
 
 		graphics2.setTransform(latch);

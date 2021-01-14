@@ -27,4 +27,9 @@ public class MenuController implements MController {
 
 	@Override
 	public boolean getSpace() { return input.isPressed(KeyEvent.VK_SPACE); }
+
+	@Override
+	public boolean exit() {
+		return input.isPressed(KeyEvent.VK_ESCAPE);
+	}
 }

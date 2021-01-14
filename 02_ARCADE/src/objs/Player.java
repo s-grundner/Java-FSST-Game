@@ -14,7 +14,6 @@ import math.Vector2;
 import misc.Question;
 import misc.SQuestionL;
 import movement.PController;
-import movement.PlayerController;
 import objs.enumerators.GameState;
 import objs.enumerators.Maps;
 import objs.enumerators.Objects;
@@ -119,7 +118,7 @@ public class Player extends Entity implements Animated {
 			move(stats.getSpeed());
 		}
 		if (hp < 0) {
-			outitialize();
+			exit();
 		}
 	}
 
@@ -214,7 +213,7 @@ public class Player extends Entity implements Animated {
 		}
 	}
 
-	private void outitialize() {
+	private void exit() {
 		game.parseObjs().forEach(obj -> obj.setAlive(false));
 		game.setGameState(GameState.END);
 	}

@@ -41,15 +41,20 @@ public class Game {
 	private Collision collision;
 	private GameState gameState;
 	private Menu menu;
+	private boolean[] init;
 
 	public Game() {
 		config = new Config();
 		config.init();
-		gameState = GameState.GAME;
+		gameState = GameState.MENU;
 
+		init = new boolean[3];
+		for (int i = 0; i < init.length; i++) {
+			init[i] = true;
+		}
 		input = new Input();
 		gui = new Gui(Config.CANVAS_WIDTH, Config.CANVAS_HEIGHT, input);
-		menu = new Menu(this, new PlayerController(input));
+		menu = new Menu(this, new MenuController(input));
 		collision = new Collision(this);
 
 		initMap(Maps.MAP1);
@@ -91,24 +96,41 @@ public class Game {
 	public void update() {
 		switch (gameState) {
 			case MENU:
-
+				if(init[0]) {
+					init[0] = false;
+				}
+				menu.update();
 				config.refresh(gui);
+				
 				// ------------------------------------------------------------
 				// Audio
 				// ------------------------------------------------------------
 
-//				if (Config.AUDIO) {
-//					if (playAudio) {
-//						playAudio = false;
-//						audio.select("GAME-Menu.wav");
-//						audio.loop();
-//					}
-//				}
+				if (Config.AUDIO) {
+					if (playAudio) {
+						playAudio = false;
+						audio.select("GAME-Menu.wav");
+						audio.loop();
+					}
+				}
 			break;
 			case END:
+				if(init[1]) {
+					init[1] = false;
+					
+				}
 				audio.stop();
+				System.exit(0);
 			break;
 			case GAME:
+				if(init[2]) {
+					init[2] = false;
+					menu = null;
+					config.refresh(gui);
+					map.getGameScaler().rescale();
+					initAudio();
+				}
+				
 				collision.update();
 				objs.addAll(add);
 				add.clear();
@@ -188,6 +210,8 @@ public class Game {
 	public void setGameState(GameState gameState) { this.gameState = gameState; }
 
 	public Menu getMenu() { return menu; }
+
+	public Audio getAudio() { return audio; }
 
 	// ------------------------------------------------------------
 	// Debug

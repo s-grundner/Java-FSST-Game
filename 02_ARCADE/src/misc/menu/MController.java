@@ -12,4 +12,5 @@ public interface MController {
 	Position getMousePos();
 	boolean getMouseClick();
 	boolean getSpace();
+	boolean exit();
 }
