@@ -26,32 +26,33 @@ public class Spawner {
 		this.obj = obj;
 		this.spawnTime = spawnTime;
 		running = true;
-		
 	}
 
 	public void update() {
 		if (running) {
+			spawnTime = 2 * 1500 / game.getDifficulty();
+
 			if ((System.currentTimeMillis() > estTime)) {
 				estTime = System.currentTimeMillis() + spawnTime;
 				GameObj obj2 = obj;
 				switch (obj.getObject()) {
 					case HOSTILE:
 						obj2 = new Hostile(game, ((Hostile) obj).getType());
-						break;
+					break;
 					case ITEM:
 						obj2 = new Item(game, ((Item) obj).getItemType());
-						break;
+					break;
 					case PLAYER:
 						obj2 = new Player(game, ((Player) obj).getController());
-						break;
+					break;
 					case PROJECTILE:
 						obj2 = new Projectile(game, ((Projectile) obj).getProjectile(), ((Projectile) obj).getHost());
-						break;
+					break;
 					case TILE:
 						obj2 = new Tile(game);
-						break;
+					break;
 					default:
-						break;
+					break;
 				}
 				obj2.randomize();
 				game.addObjs(obj2);
@@ -62,4 +63,8 @@ public class Spawner {
 	public boolean isRunning() { return running; }
 
 	public void setRunning(boolean running) { this.running = running; }
+
+	public int getSpawnTime() { return spawnTime; }
+
+	public void setSpawnTime(int spawnTime) { this.spawnTime = spawnTime; }
 }

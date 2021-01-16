@@ -42,6 +42,7 @@ public class Game {
 	private GameState gameState;
 	private Menu menu;
 	private boolean[] init;
+	private int difficulty;
 
 	public Game() {
 		config = new Config();
@@ -56,6 +57,8 @@ public class Game {
 		gui = new Gui(Config.CANVAS_WIDTH, Config.CANVAS_HEIGHT, input);
 		menu = new Menu(this, new MenuController(input));
 		collision = new Collision(this);
+
+		difficulty = 1;
 
 		initMap(Maps.MAP1);
 		initObjs();
@@ -96,12 +99,12 @@ public class Game {
 	public void update() {
 		switch (gameState) {
 			case MENU:
-				if(init[0]) {
+				if (init[0]) {
 					init[0] = false;
 				}
 				menu.update();
 				config.refresh(gui);
-				
+
 				// ------------------------------------------------------------
 				// Audio
 				// ------------------------------------------------------------
@@ -115,22 +118,21 @@ public class Game {
 				}
 			break;
 			case END:
-				if(init[1]) {
+				if (init[1]) {
 					init[1] = false;
-					
 				}
 				audio.stop();
 				System.exit(0);
 			break;
 			case GAME:
-				if(init[2]) {
+				if (init[2]) {
 					init[2] = false;
 					menu = null;
 					config.refresh(gui);
 					map.getGameScaler().rescale();
 					initAudio();
 				}
-				
+
 				collision.update();
 				objs.addAll(add);
 				add.clear();
@@ -212,6 +214,10 @@ public class Game {
 	public Menu getMenu() { return menu; }
 
 	public Audio getAudio() { return audio; }
+
+	public int getDifficulty() { return difficulty; }
+
+	public void setDifficulty(int difficulty) { this.difficulty = difficulty; }
 
 	// ------------------------------------------------------------
 	// Debug

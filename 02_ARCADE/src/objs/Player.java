@@ -99,6 +99,7 @@ public class Player extends Entity implements Animated {
 					}
 				}
 				sw[1] = true;
+				game.setDifficulty(game.getDifficulty() + 1);
 				game.initMap(Maps.values()[swIndex]);
 				setDefaultPos();
 				swIndex++;
@@ -350,14 +351,20 @@ public class Player extends Entity implements Animated {
 		}
 		graphics.setColor(new Color(0, 0, 0, 120));
 		graphics.fillRect(	16,
-							0,
+		                  	0,
 							64,
+							16);
+		graphics.fillRect(	16,
+		                  	game.getMap().getHeight()*Config.TILESIZE-Config.TILESIZE,
+							80,
 							16);
 		graphics.setColor(Color.WHITE);
 		graphics.drawString("Score: " + String.valueOf(score),
 							19,
 							12);
-
+		graphics.drawString("Difficulty: " + String.valueOf(game.getDifficulty()),
+							19,
+							12+(game.getMap().getHeight()-1)*Config.TILESIZE);
 		graphics.dispose();
 	}
 
