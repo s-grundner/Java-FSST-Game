@@ -12,6 +12,7 @@ public enum ConfigVariables {
 	//------------------------------------------------------------
 	
 	AUDIO,
+	QUESTIONS,
 	VOLUME,
 	CANVAS_WIDTH,
 	CANVAS_HEIGHT,

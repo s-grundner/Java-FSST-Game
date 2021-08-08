@@ -66,11 +66,14 @@ public class Player extends Entity implements Animated {
 		chargingIndex = 0;
 		swIndex = 1;
 		charging = false;
-		sql = new SQuestionL();
 		sw = new boolean[5];
 		for (int i = 0; i < sw.length; i++) {
 			sw[i] = true;
 		}
+		if(Config.QUESTIONS) {
+			sql = new SQuestionL();
+		}
+		
 	}
 
 	// ------------------------------------------------------------
@@ -106,7 +109,10 @@ public class Player extends Entity implements Animated {
 				isShooting = false;
 				vector.setVector(	0,
 									0);
-				askQuestion();
+				if(Config.QUESTIONS) {
+					askQuestion();
+				}
+				
 			}
 			sw[0] = false;
 		} else {

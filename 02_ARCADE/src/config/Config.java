@@ -22,6 +22,7 @@ public class Config {
 	private static ConfigVariables[] config = ConfigVariables.values();
 
 	public static boolean AUDIO;
+	public static boolean QUESTIONS;
 	public static float VOLUME;
 	public static int CANVAS_WIDTH;
 	public static int CANVAS_HEIGHT;
@@ -56,6 +57,10 @@ public class Config {
 		switch(configVariables) {
 		case AUDIO:
 			AUDIO = Boolean.parseBoolean(operation);
+			break;
+
+		case QUESTIONS:
+			QUESTIONS = Boolean.parseBoolean(operation);
 			break;
 			
 		case VOLUME:
