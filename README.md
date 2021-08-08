@@ -1,5 +1,6 @@
 # Java-FSST-Game
 Java Top-Down Game FSST Projekt
+
 The Bugs are just for enhanced difficulty
 
 # Credits
