@@ -1,4 +1,4 @@
-# Java-FSST-Game
+# FSST-TDS
 Java Top-Down Game FSST Projekt
 
 The Bugs are just for enhanced difficulty
