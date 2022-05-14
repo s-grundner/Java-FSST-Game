@@ -4,7 +4,7 @@ Java Top-Down Game FSST Projekt
 The Bugs are just for enhanced difficulty
 
 No release.
-Just buildit urself 😘
+Just build it urself 😘
 
 # [Full Game-Soundtrack](https://soundcloud.com/sminosmino/fibrillate)
 
