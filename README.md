@@ -1,5 +1,5 @@
 # FSST-TDS
-Java Top-Down Game FSST Projekt
+Java Top-Down Game FSST Project
 
 The Bugs are just for enhanced difficulty
 
