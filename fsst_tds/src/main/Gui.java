@@ -55,14 +55,8 @@ public class Gui extends JFrame {
 
 	public void render(Game game) {
 		Graphics2D graphics = (Graphics2D) bs.getDrawGraphics();
-		graphics.drawImage(	bg.getSheet(),
-							0,
-							0,
-							canvas.getWidth(),
-							canvas.getHeight(),
-							null);
-		graphics.scale(	Config.SCALE,
-						Config.SCALE);
+		graphics.drawImage(bg.getSheet(), 0, 0, canvas.getWidth(), canvas.getHeight(), null);
+		graphics.scale(Config.SCALE, Config.SCALE);
 		switch (game.getGameState()) {
 			case END:
 			break;
