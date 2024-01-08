@@ -23,7 +23,6 @@ public class Audio {
 	public Audio(String startFile) {
 		this.volume = Config.VOLUME;
 		select(startFile);
-		
 	} 
 
 	//------------------------------------------------------------
@@ -37,7 +36,6 @@ public class Audio {
 			clip = AudioSystem.getClip();
 			clip.open(sound);
 //			setVolume(volume);
-
 		} catch (Exception e) {
 			System.out.println("Error while trying to load audio file: " + e);
 		}
