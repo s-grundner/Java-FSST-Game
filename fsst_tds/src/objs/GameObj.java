@@ -79,10 +79,7 @@ public abstract class GameObj {
 	public void draw(Graphics2D graphics) {
 		Graphics2D graphics2 = (Graphics2D) graphics.create();
 		AffineTransform latch = graphics.getTransform();
-		graphics.drawImage(	getImg(),
-							transform(graphics2),
-							null);
-
+		graphics.drawImage(getImg(), transform(graphics2), null);
 		graphics.setTransform(latch);
 		graphics2.dispose();
 	}
@@ -100,10 +97,8 @@ public abstract class GameObj {
 				setAlive(false);
 				break;
 			}
-			pos = new Position(	rnd.nextInt(game.getMap().getWidth() * Config.TILESIZE),
-								rnd.nextInt(game.getMap().getHeight() * Config.TILESIZE));
-		} while (game.getCollision().checkCollision(pos,
-													size));
+			pos = new Position(rnd.nextInt(game.getMap().getWidth() * Config.TILESIZE), rnd.nextInt(game.getMap().getHeight() * Config.TILESIZE));
+		} while (game.getCollision().checkCollision(pos, size));
 	}
 
 	// ------------------------------------------------------------
@@ -182,20 +177,14 @@ public abstract class GameObj {
 	public void drawOrigin(Graphics2D graphics) {
 		Graphics2D graphics2 = (Graphics2D) graphics.create();
 		graphics2.setColor(Color.BLUE);
-		graphics2.drawRect(	(int) pos.getX(),
-							(int) pos.getY(),
-							2,
-							2);
+		graphics2.drawRect((int) pos.getX(), (int) pos.getY(), 2, 2);
 		graphics2.dispose();
 	}
 
 	public void drawOutline(Graphics2D graphics) {
 		Graphics2D graphics2 = (Graphics2D) graphics.create();
 		graphics2.setColor(Color.BLUE);
-		graphics2.drawRect(	(int) pos.getX(),
-							(int) pos.getY(),
-							(int) size.getWidth(),
-							(int) size.getHeight());
+		graphics2.drawRect((int) pos.getX(), (int) pos.getY(), (int) size.getWidth(), (int) size.getHeight());
 		graphics2.dispose();
 	}
 }

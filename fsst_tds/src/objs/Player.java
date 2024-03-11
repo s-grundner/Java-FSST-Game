@@ -24,8 +24,7 @@ import objs.properties.Position;
 import objs.properties.Spritesheet;
 
 /**
- * @author	Simon Grundner
- *			3AHEL
+ * @author Simon Grundner 3AHEL
  */
 
 public class Player extends Entity implements Animated {
@@ -70,10 +69,10 @@ public class Player extends Entity implements Animated {
 		for (int i = 0; i < sw.length; i++) {
 			sw[i] = true;
 		}
-		if(Config.QUESTIONS) {
+		if (Config.QUESTIONS) {
 			sql = new SQuestionL();
 		}
-		
+
 	}
 
 	// ------------------------------------------------------------
@@ -85,8 +84,7 @@ public class Player extends Entity implements Animated {
 		super.update();
 		setShootingVector(getMouseVector());
 
-		vector.setVector(	0,
-							0);
+		vector.setVector(0, 0);
 		Keys();
 		colliding();
 		initAnim();
@@ -107,12 +105,11 @@ public class Player extends Entity implements Animated {
 				setDefaultPos();
 				swIndex++;
 				isShooting = false;
-				vector.setVector(	0,
-									0);
-				if(Config.QUESTIONS) {
+				vector.setVector(0, 0);
+				if (Config.QUESTIONS) {
 					askQuestion();
 				}
-				
+
 			}
 			sw[0] = false;
 		} else {
@@ -205,17 +202,14 @@ public class Player extends Entity implements Animated {
 
 	public void askQuestion() {
 		Question q = sql.getRandomQ();
-		String answer = JOptionPane.showInputDialog(null,
-													q.getQ(),
-													"Question",
-													3);
+		String answer = JOptionPane.showInputDialog(null, q.getQ(), "Question", 3);
 		if (q.isCorrect(answer)) {
 			System.out.println("uwu");
 			if (hp != stats.getHp()) {
 				hp++;
 			}
 		} else {
-			System.out.println("òwó");
+			System.out.println("ï¿½wï¿½");
 			hp--;
 		}
 	}
@@ -295,10 +289,8 @@ public class Player extends Entity implements Animated {
 
 		if ((System.currentTimeMillis() > nextImg)) {
 			if (animationIndex < spritesheet.getImgCount()) {
-				img = spritesheet.getImage(	animationIndex,
-											animation.getMode());
+				img = spritesheet.getImage(animationIndex, animation.getMode());
 				animationIndex++;
-
 				if (chargingIndex < Animation.P_CHARGING_STAGES.getFrameCount() - 1) {
 					chargingIndex++;
 				}
@@ -318,24 +310,16 @@ public class Player extends Entity implements Animated {
 	@Override
 	public AffineTransform transform(Graphics2D graphics) {
 		AffineTransform transform;
-		transform = AffineTransform.getTranslateInstance(	pos.getX() + size.getWidth() / 2,
-															pos.getY() + size.getHeight() / 2);
+		transform = AffineTransform.getTranslateInstance(pos.getX() + size.getWidth() / 2, pos.getY() + size.getHeight() / 2);
 
 		if (controller.shoot() || controller.charge() || charging) {
-			transform.setToRotation(getMouseVector().getX(),
-									getMouseVector().getY(),
-									pos.getX() + size.getWidth() / 2,
-									pos.getY() + size.getHeight() / 2);
+			transform.setToRotation(getMouseVector().getX(), getMouseVector().getY(), pos.getX() + size.getWidth() / 2, pos.getY() + size.getHeight() / 2);
 			graphics.transform(transform);
 		} else {
-			transform.setToRotation(pointingVector.getX(),
-									pointingVector.getY(),
-									pos.getX() + size.getWidth() / 2,
-									pos.getY() + size.getHeight() / 2);
+			transform.setToRotation(pointingVector.getX(), pointingVector.getY(), pos.getX() + size.getWidth() / 2, pos.getY() + size.getHeight() / 2);
 			graphics.transform(transform);
 		}
-		transform.translate(pos.getX(),
-							pos.getY());
+		transform.translate(pos.getX(), pos.getY());
 		graphics.transform(transform);
 
 		return transform;
@@ -349,28 +333,14 @@ public class Player extends Entity implements Animated {
 			} else if (i < (stats.getHp() - hp + 1) / 2) {
 				hpArr[i] = 1;
 			}
-			graphics.drawImage(	hpSprite.getImage(	hpArr[i],
-													0),
-								0,
-								16 * i,
-								null);
+			graphics.drawImage(hpSprite.getImage(hpArr[i], 0), 0, 16 * i, null);
 		}
 		graphics.setColor(new Color(0, 0, 0, 120));
-		graphics.fillRect(	16,
-		                  	0,
-							64,
-							16);
-		graphics.fillRect(	16,
-		                  	game.getMap().getHeight()*Config.TILESIZE-Config.TILESIZE,
-							80,
-							16);
+		graphics.fillRect(16, 0, 64, 16);
+		graphics.fillRect(16, game.getMap().getHeight() * Config.TILESIZE - Config.TILESIZE, 80, 16);
 		graphics.setColor(Color.WHITE);
-		graphics.drawString("Score: " + String.valueOf(score),
-							19,
-							12);
-		graphics.drawString("Difficulty: " + String.valueOf(game.getDifficulty()),
-							19,
-							12+(game.getMap().getHeight()-1)*Config.TILESIZE);
+		graphics.drawString("Score: " + String.valueOf(score), 19, 12);
+		graphics.drawString("Difficulty: " + String.valueOf(game.getDifficulty()), 19, 12 + (game.getMap().getHeight() - 1) * Config.TILESIZE);
 		graphics.dispose();
 	}
 
@@ -379,12 +349,13 @@ public class Player extends Entity implements Animated {
 	// ------------------------------------------------------------
 
 	public Vector2 getMouseVector() {
-		Vector2 vector = new Vector2(	controller.getMousePos().getX()
-												- (pos.getX() + (Config.TILESIZE / 2)) * Config.SCALE,
-										controller.getMousePos().getY()
-												- (pos.getY() + (Config.TILESIZE / 2)) * Config.SCALE);
+		Vector2 vector = new Vector2(
+				controller.getMousePos().getX() - (pos.getX() + (Config.TILESIZE / 2)) * Config.SCALE,
+				controller.getMousePos().getY() - (pos.getY() + (Config.TILESIZE / 2)) * Config.SCALE);
 		return vector;
 	}
 
-	public PController getController() { return controller; }
+	public PController getController() {
+		return controller;
+	}
 }

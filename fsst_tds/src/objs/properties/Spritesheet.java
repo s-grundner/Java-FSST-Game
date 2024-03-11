@@ -28,10 +28,7 @@ public class Spritesheet {
 
 		for (int i = 0; i < parts.length; i++) {
 			for (int j = 0; j < parts[i].length; j++) {
-				parts[i][j] = sheet.getSubimage((i * Config.TILESIZE),
-												(j * Config.TILESIZE),
-												Config.TILESIZE,
-												Config.TILESIZE);
+				parts[i][j] = sheet.getSubimage((i * Config.TILESIZE), (j * Config.TILESIZE), Config.TILESIZE, Config.TILESIZE);
 			}
 		}
 	}

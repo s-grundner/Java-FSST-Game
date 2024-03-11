@@ -26,8 +26,7 @@ public class GameScaler {
 		scaleX = Config.CANVAS_WIDTH / (Config.TILESIZE * size.getWidth());
 		scaleY = Config.CANVAS_HEIGHT / (Config.TILESIZE * size.getHeight());
 
-		Config.SCALE = Math.min(scaleX,
-								scaleY);
+		Config.SCALE = Math.min(scaleX, scaleY);
 	}
 
 	public void compareXY() {
