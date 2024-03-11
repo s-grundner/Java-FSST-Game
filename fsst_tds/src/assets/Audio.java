@@ -23,7 +23,6 @@ public class Audio {
 	public Audio(String startFile) {
 		this.volume = Config.VOLUME;
 		select(startFile);
-		
 	} 
 
 	//------------------------------------------------------------
@@ -37,7 +36,6 @@ public class Audio {
 			clip = AudioSystem.getClip();
 			clip.open(sound);
 //			setVolume(volume);
-
 		} catch (Exception e) {
 			System.out.println("Error while trying to load audio file: " + e);
 		}
@@ -66,7 +64,7 @@ public class Audio {
 		return clip.getMicrosecondLength();
 	}
 	
-	public void setVolume(float volume) {
+	public void setVolume(float volume) throws IllegalArgumentException {
 	    if (volume < 0f || volume > 1f)
 	        throw new IllegalArgumentException("Volume not valid: " + volume);
 	    FloatControl gainControl = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);        

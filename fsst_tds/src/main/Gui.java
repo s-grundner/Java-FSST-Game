@@ -13,8 +13,8 @@ import movement.Input;
 import objs.properties.Spritesheet;
 
 /**
- * @author	Simon Grundner
- *			3AHEL
+ * @author Simon Grundner
+ *         3AHEL
  */
 
 public class Gui extends JFrame {
@@ -56,22 +56,22 @@ public class Gui extends JFrame {
 	public void render(Game game) {
 		Graphics2D graphics = (Graphics2D) bs.getDrawGraphics();
 		graphics.drawImage(bg.getSheet(), 0, 0, canvas.getWidth(), canvas.getHeight(), null);
-		graphics.scale(	Config.SCALE, Config.SCALE);
+		graphics.scale(Config.SCALE, Config.SCALE);
 		switch (game.getGameState()) {
 			case END:
-			break;
+				break;
 			case GAME:
 				game.drawMapBot(graphics);
 				game.parseObjs().forEach(obj -> obj.draw(graphics));
 				game.drawMapTop(graphics);
 				game.parseObjs().forEach(obj -> obj.drawStats(graphics));
 
-			break;
+				break;
 			case MENU:
 				game.getMenu().draw(graphics);
-			break;
+				break;
 			default:
-			break;
+				break;
 		}
 		graphics.dispose();
 		bs.show();
@@ -81,5 +81,7 @@ public class Gui extends JFrame {
 	// Getters - Setters
 	// ------------------------------------------------------------
 
-	public Canvas getCanvas() { return canvas; }
+	public Canvas getCanvas() {
+		return canvas;
+	}
 }
